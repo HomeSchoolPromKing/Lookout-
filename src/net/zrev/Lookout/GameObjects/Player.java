@@ -69,12 +69,15 @@ public class Player extends Entity {
 				if(((SwitchDirections) objectRight).direction == 1) {
 					super.movingLeft = true;
 					super.movingRight = false;
+					Game.currentLevel.toRemove = objectRight;
 				}
-				Game.currentLevel.toRemove = objectRight;
+				else if(objectRight instanceof Jump) {
+					Game.p.jump();
+					Game.currentLevel.toRemove = objectRight;
+				}
 			}
 		}
 	}
-
 	
 	private void whatToDoObjectLeft() {
 		if(objectLeft != null) {
@@ -85,10 +88,13 @@ public class Player extends Entity {
 				}
 				Game.currentLevel.toRemove = objectLeft;
 			}
+			else if(objectLeft instanceof Jump) {
+				Game.p.jump();
+				Game.currentLevel.toRemove = objectLeft;
+			}
 		}
 	}
-
-
+	
 	public int getHealth() {
 		return health;
 	}

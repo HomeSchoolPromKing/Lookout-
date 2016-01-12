@@ -22,8 +22,6 @@ public class Game {
 		Camera.update();
 	}
 	
-	
-
 	public static void startGame(){
 		Camera.init(0, 0, 1920, 1080);
 		for(Entity e : currentLevel.gameObjects) {
@@ -33,10 +31,6 @@ public class Game {
 		}
 	}
 	
-	private void generatePlayers(){
-	}
-	
-	
 	public static Player p = null;
 	
 	public static int gameWidth = 1920, gameHeight = 1080;
@@ -45,5 +39,8 @@ public class Game {
 			minOffsetY = -viewHeight, maxOffsetY = gameHeight + viewHeight,
 			currentOffsetX = 0, currentOffsetY = 0;
 	public static Level currentLevel = new Level(1);
-	public static float gravity = 5;
+	
+	public static int itemSelected = 0;
+	public static ArrayList<Entity> items = new ArrayList<Entity>();
+	
 }

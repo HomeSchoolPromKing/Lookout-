@@ -47,6 +47,7 @@ public abstract class Entity {
 	}
 
 	public void update(int delta){
+		
 		aboveCollision = new Rectangle(x, y - 5, width, 5);
 		objectAbove = null;
 		
@@ -128,10 +129,10 @@ public abstract class Entity {
 	
 	
 	public void jump() {
-		if(onGround) {
-			onGround = false;
-			velocityY = -12.0F;
-		}
+		//if(onGround) {
+		onGround = false;
+		velocityY = -12.0F;
+		//}
 	}
 
 	public boolean collides(Entity other){

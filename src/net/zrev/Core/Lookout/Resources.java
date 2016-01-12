@@ -9,6 +9,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
+import net.zrev.Lookout.GameObjects.Jump;
 import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.WinZone;
@@ -52,7 +53,9 @@ public class Resources {
 		case 4:
 			Animation winZone = new Animation(new SpriteSheet(new Image("finish.png"), 128, 192), 100);
 			return new WinZone(winZone, x, y, winZone.getWidth(), winZone.getHeight());
-
+		case 5:
+			Animation jumpButton = new Animation(new SpriteSheet(new Image("jumpButton.png"), 64, 96), 100);
+			return new Jump(jumpButton, x, y, jumpButton.getWidth(), jumpButton.getHeight());
 		}
 		
 		if(DEBUG) {

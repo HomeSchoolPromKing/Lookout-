@@ -19,8 +19,8 @@ public class Core extends BasicGame {
 
 	public Core(String gamename) {
 		super(gamename);
-	} 
-
+	}
+	
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		gameC = gc;
@@ -41,7 +41,6 @@ public class Core extends BasicGame {
 	
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
-		
 	}
 
 	public void keyReleased(int key, char c) {
@@ -50,11 +49,17 @@ public class Core extends BasicGame {
 
 	public void mousePressed(int button, int x, int y) {
 		super.mousePressed(button, x, y);
-		Game.p.jump();
+		//Game.p.jump();
 	}
 
 	public void mouseWheelMoved(int change) {
 		super.mouseWheelMoved(change);
+		if(change < 0) {
+			Game.itemSelected--;
+		}
+		if(change > 0 ) {
+			Game.itemSelected++;
+		}
 	}
 	
 	public void mouseDragged(int ox, int oy, int nx, int ny) {
@@ -67,9 +72,7 @@ public class Core extends BasicGame {
 	public void mouseReleased(int button, int x, int y) {
 		super.mouseReleased(button, x, y);
 	}
-
 	
-
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		if(delta >= 30) {
@@ -82,14 +85,10 @@ public class Core extends BasicGame {
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-
 		g.scale((float) (Display.getWidth() + 150) / 1920, (float) (Display.getHeight()) / 1080);
 		g.translate(150, 0);
 		g.translate(-Camera.x, -Camera.y);
 		Game.draw(g);
-		g.setColor(Color.green);
-		g.fillRect(Camera.x - Game.p.velocityX, Camera.y, 180, 2000);
-		
 	}
 
 	//http://stackoverflow.com/questions/7168747/java-creating-self-extracting-jar-that-can-extract-parts-of-itself-out-of-the-a

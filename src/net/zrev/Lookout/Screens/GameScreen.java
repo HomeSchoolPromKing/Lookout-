@@ -1,5 +1,7 @@
 package net.zrev.Lookout.Screens;
 
+import java.awt.Font;
+
 import net.zrev.Core.Lookout.Core;
 import net.zrev.Core.Lookout.Globals;
 import net.zrev.Core.Lookout.Resources;
@@ -16,6 +18,7 @@ public class GameScreen {
 	public static void draw(Graphics g){
 		g.setColor(Color.blue);
 		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
+		
 		if(Resources.initated) {
 			//for(int i = -1920; i < 3840; i+=1920) {
 			//	for(int j = -1080; j < 2160; j+=1080) {
@@ -38,8 +41,9 @@ public class GameScreen {
 
 		if(Game.currentLevel.toRemove != null)
 			Game.currentLevel.gameObjects.remove(Game.currentLevel.toRemove);
-
+		
+		//g.setColor(Color.green);
+		//-------------------------------------------Font f=	new Font("Arial", Font.BOLD, 24.0F);
+		//g.drawString(Game.itemSelected + " ", Camera.x, Camera.y);
 	}
-	
-
 }
