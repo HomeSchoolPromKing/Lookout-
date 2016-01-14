@@ -28,7 +28,11 @@ public class Controls {
 	}
 
 	public static void mousePressed(int button, int x, int y) {
-		Game.placeObject();
+		if(button == 0)
+			Game.placeObject();
+		else if(button == 1) {
+			Game.removeObject();
+		}
 	}
 
 	public static void mouseWheelMoved(int change) {

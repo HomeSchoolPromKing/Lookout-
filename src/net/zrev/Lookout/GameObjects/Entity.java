@@ -167,6 +167,8 @@ public abstract class Entity implements Cloneable {
 	}
 	
 	
+	
+	public boolean wasPlaced = false;
 	public Entity objectLeft = null, objectRight = null, objectAbove = null, objectBelow = null;
 	private Rectangle leftCollision, rightCollision, aboveCollision, belowCollision;
 	public boolean movingRight = false, movingLeft = false;

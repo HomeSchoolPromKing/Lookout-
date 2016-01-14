@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 import net.zrev.Lookout.Account.UserPreferences;
 import net.zrev.Lookout.Core.Globals;
@@ -45,6 +46,15 @@ public class Game {
 			e.printStackTrace();
 		}
 		//Game.items.add(new Jump(jumpButton, x, y, jumpButton.getWidth(), jumpButton.getHeight()));
+	}
+	
+	public static void removeObject() {
+		for(Entity e : currentLevel.gameObjects) {
+			if(new Rectangle(Globals.mouseX, Globals.mouseY, 2, 2).intersects(e.getBoundingBox())) {
+				if(e.wasPlaced)
+					currentLevel.toRemove = e;
+			}
+		}
 	}
 
 	public static void placeObject(){
@@ -86,5 +96,6 @@ public class Game {
 
 	public static int itemSelected = 0;
 	public static ArrayList<Entity> items = new ArrayList<Entity>();
+
 
 }
