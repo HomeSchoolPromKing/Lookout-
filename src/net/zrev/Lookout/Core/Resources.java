@@ -1,6 +1,6 @@
-package net.zrev.Core.Lookout;
+package net.zrev.Lookout.Core;
 
-import static net.zrev.Core.Lookout.Globals.*;
+import static net.zrev.Lookout.Core.Globals.*;
 
 import java.awt.Font;
 import java.io.InputStream;
@@ -26,13 +26,12 @@ import net.zrev.Lookout.Screens.GameScreen;
 
 public class Resources {
 
-	public static void init() throws Exception {
+	public static void init() {
 		if(DEBUG) {
 			System.out.println("Loading resources.");
 		}
-		bg = new Image("nebula.png");
-
 		try {
+		bg = new Image("nebula.png");
 			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(36f); // set font size
@@ -42,7 +41,6 @@ public class Resources {
 			e.printStackTrace();
 		}
 		
-
 		if(DEBUG) {
 			System.out.println("Done loading resources.");
 		}

@@ -12,8 +12,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
-import net.zrev.Core.Lookout.Globals;
 import net.zrev.Lookout.Account.UserPreferences;
+import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
 import net.zrev.Lookout.GameObjects.Jump;
@@ -22,23 +22,11 @@ import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.WinZone;
+import net.zrev.Lookout.Screens.GameOverScreen;
 import net.zrev.Lookout.Screens.GameScreen;
+import net.zrev.Lookout.Screens.NextLevelScreen;
 
 public class Game {
-
-	public static void draw(Graphics g){
-		GameScreen.draw(g);
-	}
-
-	public static void logic(){
-		Camera.update();
-		if(currentLevel.isCompleted) {
-			currentLevel.nextLevel();
-		}
-		else if(currentLevel.isFailed) {
-			currentLevel.resetLevel();
-		}
-	}
 
 	public static void initItems(){
 		try {
@@ -63,33 +51,9 @@ public class Game {
 		Entity e =  (Entity) items.get(itemSelected).clone();
 		e.x = Globals.mouseX;
 		e.y = Globals.mouseY;
-		currentLevel.gameObjects.add(convertToEntity((Placeable) e));
+		currentLevel.gameObjects.add(Placeable.convertToEntity((Placeable) e));
 	}
-
-	private static Entity convertToEntity(Placeable p) {
-		int x = (int) Globals.mouseX;
-		int y = (int) Globals.mouseY;
-		try {
-			switch(p.id) {
-			case 1:
-				Animation floor = new Animation(new SpriteSheet(new Image("floor.png"), 128, 32), 100);
-				return new Floor(floor, x, y, floor.getWidth(), floor.getHeight());
-			case 2:
-				Animation switchDir = new Animation(new SpriteSheet(new Image("switchDirLeft.png"), 96, 64), 150);
-				return new SwitchDirections(switchDir, x, y, switchDir.getWidth(), switchDir.getHeight(), 1);
-			case 3:
-				Animation switchDir2 = new Animation(new SpriteSheet(new Image("switchDirRight.png"), 96, 64), 150);
-				return new SwitchDirections(switchDir2, x, y, switchDir2.getWidth(), switchDir2.getHeight(), 2);
-			case 4:
-				Animation jumpButton = new Animation(new SpriteSheet(new Image("jumpButton.png"), 64, 96), 100);
-				return new Jump(jumpButton, x, y, jumpButton.getWidth(), jumpButton.getHeight());
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 	
 	public static void startGame(){
 		Camera.init(0, 0, 1920, 1080);
@@ -100,8 +64,16 @@ public class Game {
 		}
 		initItems();
 	}
-
 	
+	public static void logic(){
+		if(currentLevel.isCompleted) {
+			Level.nextLevel();
+		}
+		else if(currentLevel.isFailed) {
+			Level.resetLevel();
+		}
+	}
+
 	
 	public static Player p = null;
 

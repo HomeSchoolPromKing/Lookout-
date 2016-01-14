@@ -1,6 +1,6 @@
 package net.zrev.Lookout.GameObjects;
 
-import net.zrev.Core.Lookout.Globals;
+import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
 
@@ -40,7 +40,6 @@ public class Player extends Entity {
 			Camera.y = y - (Camera.height / 2);
 			checkIfDead();
 		}
-
 	}
 	
 	private void checkIfDead(){
@@ -123,27 +122,8 @@ public class Player extends Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-
-	public float getOriginalXSpeed() {
-		return originalXSpeed;
-	}
-
-	public void setOriginalXSpeed(float originalXSpeed) {
-		this.originalXSpeed = originalXSpeed;
-	}
-
-	public float getCurrentXSpeed() {
-		return currentXSpeed;
-	}
-
-	public void setCurrentXSpeed(float currentXSpeed) {
-		this.currentXSpeed = currentXSpeed;
-	}
-
+	
 
 	public Animation runRight = null, runLeft = null;
 	private int health = 0;
-	private float originalXSpeed = 1;
-	private float currentXSpeed = 1;
-
 }

@@ -7,7 +7,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
-import static net.zrev.Core.Lookout.Globals.*;
+import static net.zrev.Lookout.Core.Globals.*;
 
 public abstract class Entity implements Cloneable {
 
@@ -136,12 +136,9 @@ public abstract class Entity implements Cloneable {
 		}
 	}
 	
-	
 	public void jump() {
-		//if(onGround) {
 		onGround = false;
 		velocityY = -12.0F;
-		//}
 	}
 
 	public boolean collides(Entity other){
@@ -168,7 +165,6 @@ public abstract class Entity implements Cloneable {
 	public void setAnim(Animation anim) {
 		this.anim = anim;
 	}
-
 	
 	
 	public Entity objectLeft = null, objectRight = null, objectAbove = null, objectBelow = null;

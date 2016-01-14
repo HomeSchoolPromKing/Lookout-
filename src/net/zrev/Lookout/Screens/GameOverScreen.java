@@ -2,8 +2,8 @@ package net.zrev.Lookout.Screens;
 
 import java.awt.Font;
 
-import net.zrev.Core.Lookout.Globals;
-import net.zrev.Core.Lookout.Resources;
+import net.zrev.Lookout.Core.Globals;
+import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Game.Camera;
 
 import org.newdawn.slick.Color;

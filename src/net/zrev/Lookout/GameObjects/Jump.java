@@ -11,7 +11,7 @@ public class Jump extends Entity {
 	}
 	
 	public void update(int delta){
-		
+		super.update(delta);
 	}
 	
 }

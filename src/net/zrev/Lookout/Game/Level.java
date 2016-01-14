@@ -3,8 +3,8 @@ package net.zrev.Lookout.Game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import net.zrev.Core.Lookout.Globals;
-import net.zrev.Core.Lookout.Resources;
+import net.zrev.Lookout.Core.Globals;
+import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.GameObjects.Entity;
 
 public class Level {
@@ -30,7 +30,6 @@ public class Level {
 		}
 		
 	}
-	
 	
 	public static void resetLevel(){
 		Game.currentLevel.gameObjects.clear();

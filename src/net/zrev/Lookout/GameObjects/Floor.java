@@ -10,7 +10,6 @@ public class Floor extends Entity {
 		isSolid = true;
 	}
 
-	
 	public void update(int delta){
 		
 	}

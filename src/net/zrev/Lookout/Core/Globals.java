@@ -1,4 +1,4 @@
-package net.zrev.Core.Lookout;
+package net.zrev.Lookout.Core;
 
 
 import net.zrev.Lookout.Account.UserPreferences;
@@ -9,27 +9,12 @@ import org.lwjgl.opengl.Display;
 public class Globals {
 	
 	public static void scaling(){
-//		if(Display.getWidth() != gc.getWidth() || Display.getHeight() != gc.getHeight()) {
-//			try {
-//				scaleX = (float) Display.getWidth() / startingResX;
-//				scaleY = (float) (Display.getHeight() - guiOffset) / startingResY;
-//				appgc.setDisplayMode(Display.getWidth(), Display.getHeight(), false);
-//				appgc.reinit();
-//				Display.setResizable(true);
-//			} 
-//			catch(Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-
-		//scaleX = (float) Display.getWidth() / startingResX;
-		//scaleY = (float) (Display.getHeight() - guiOffset)  / startingResY;
-		
 		if(Display.wasResized() || !Display.isResizable()) {
 			Display.setResizable(true);
 		}
+		Globals.width = ( (float)  Display.getWidth()) / ((float) Display.getWidth() / 1920);
+		Globals.height = ( (float)  Display.getHeight()) / ((float) Display.getHeight() / 1080);
 	}
-	
 
 	public static int delta = 0;
 	public static float mouseX = 0, mouseY = 0; 
