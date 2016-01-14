@@ -2,10 +2,13 @@ package net.zrev.Core.Lookout;
 
 import static net.zrev.Core.Lookout.Globals.*;
 
+import java.util.Random;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
@@ -15,6 +18,7 @@ import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.WinZone;
+import net.zrev.Lookout.Screens.GameScreen;
 
 public class Resources {
 
@@ -22,7 +26,7 @@ public class Resources {
 		if(DEBUG) {
 			System.out.println("Loading resources.");
 		}
-		bg = new Image("bg.png");
+		bg = new Image("nebula.png");
 
 		if(DEBUG) {
 			System.out.println("Done loading resources.");

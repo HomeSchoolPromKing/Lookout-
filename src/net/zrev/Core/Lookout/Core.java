@@ -83,8 +83,8 @@ public class Core extends BasicGame {
 		super.mouseMoved(ox, oy, nx, ny);
 		float tempX = (float) input.getMouseX() / scaleX;
 		float tempY = (float) input.getMouseY() / scaleY;
-		Globals.mouseX = (int) tempX + Camera.x;
-		Globals.mouseY = (int) tempY;
+		Globals.mouseX = (int) tempX + Camera.x + Game.p.velocityX;
+		Globals.mouseY = (int) tempY + Game.p.velocityY;
 	}
 	
 	public void mouseReleased(int button, int x, int y) {
@@ -99,6 +99,8 @@ public class Core extends BasicGame {
 		Camera.update();
 		scaling();
 		input = gc.getInput();
+		Globals.mouseX += Game.p.velocityX;
+		Globals.mouseY += Game.p.velocityY;
 		Game.logic();
 	}
 

@@ -32,11 +32,14 @@ public class Game {
 
 	public static void logic(){
 		Camera.update();
+		if(Game.currentLevel.isDone) {
+			Game.nextLevel();
+		}
 	}
 
 	public static void initItems(){
 		try {
-			Scanner s = new Scanner(new File("data/items.txt"));
+			Scanner s = new Scanner(Globals.class.getResourceAsStream("/items.txt"));
 			while(s.hasNextLine()) {
 				String[] params = s.nextLine().split("\\t");
 				int id = Integer.parseInt(params[0]);
@@ -85,6 +88,16 @@ public class Game {
 		return null;
 	}
 
+	public static void nextLevel(){
+		Game.currentLevel.gameObjects.clear();
+		Game.currentLevel.isDone = false;
+		Game.currentLevel.loadLevel(++Game.currentLevel.levelId);
+		Game.items.clear();
+		Game.itemSelected = 0;
+		startGame();
+	}
+	
+	
 	public static void startGame(){
 		Camera.init(0, 0, 1920, 1080);
 		for(Entity e : currentLevel.gameObjects) {
@@ -93,7 +106,6 @@ public class Game {
 			}
 		}
 		initItems();
-		System.out.println(items.size() + " " + items.get(0).anim.getImage(0).getName());
 	}
 
 	public static Player p = null;

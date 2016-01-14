@@ -10,6 +10,7 @@ import net.zrev.Lookout.GameObjects.Entity;
 public class Level {
 	
 	public Level(int level){
+		levelId = level;
 		loadLevel(level);
 	}
 	
@@ -44,7 +45,7 @@ public class Level {
 		}
 	}
 	
-	
+	public int levelId = 0;
 	public boolean isDone = false;
 	public Entity toRemove = null;
 	public ArrayList<Entity> gameObjects = new ArrayList<Entity>();
