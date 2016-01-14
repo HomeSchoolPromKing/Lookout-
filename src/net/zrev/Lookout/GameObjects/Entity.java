@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import static net.zrev.Core.Lookout.Globals.*;
 
-public abstract class Entity {
+public abstract class Entity implements Cloneable {
 
 	public Entity(Animation anim, float x, float y, float width, float height){
 		boundingBox = new Rectangle(x, y, width, height);
@@ -45,6 +45,14 @@ public abstract class Entity {
 			g.drawAnimation(anim, x, y);
 		}
 	}
+	public Entity clone() {
+		try {
+			return (Entity) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public void update(int delta){
 		
@@ -66,6 +74,7 @@ public abstract class Entity {
 		
 		x += velocityX;
 		if(!onGround && isSolid) {
+		
 			velocityY += gravity;
 			y += velocityY;
 		}
@@ -94,7 +103,7 @@ public abstract class Entity {
 		
 		if(objectBelow instanceof Floor && isSolid) {
 			if((objectLeft == null || !objectLeft.isSolid) && (objectRight == null ||!objectRight.isSolid )) {
-				if((this.y + this.height) > objectBelow.y && isSolid) {
+				if((this.y + this.height) > objectBelow.y) {
 					this.y = objectBelow.y - this.height;
 					onGround = true;
 					velocityY = 0.0F;
@@ -160,6 +169,7 @@ public abstract class Entity {
 		this.anim = anim;
 	}
 
+	
 	
 	public Entity objectLeft = null, objectRight = null, objectAbove = null, objectBelow = null;
 	private Rectangle leftCollision, rightCollision, aboveCollision, belowCollision;

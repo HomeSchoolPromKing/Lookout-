@@ -7,7 +7,6 @@ import net.zrev.Lookout.Game.Game;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -27,6 +26,8 @@ public class Core extends BasicGame {
 		Display.setResizable(true);
 		gameC.setFullscreen(false);
 		gameC.setShowFPS(false);
+		appgc.setMouseGrabbed(true);
+		gameC.setMouseGrabbed(true);
 		input = gc.getInput();
 		try {
 			Resources.init();
@@ -50,16 +51,29 @@ public class Core extends BasicGame {
 	public void mousePressed(int button, int x, int y) {
 		super.mousePressed(button, x, y);
 		//Game.p.jump();
+		Game.placeObject();
 	}
 
 	public void mouseWheelMoved(int change) {
 		super.mouseWheelMoved(change);
+		change = change / Math.abs(change);
 		if(change < 0) {
-			Game.itemSelected--;
+			if (Game.itemSelected + change < 0) {
+				
+			}
+			else {
+				Game.itemSelected--;
+			}
 		}
 		if(change > 0 ) {
-			Game.itemSelected++;
+			if (Game.itemSelected + change > Game.items.size() - 1) {
+		
+			}
+			else {
+				Game.itemSelected++;
+			}
 		}
+		
 	}
 	
 	public void mouseDragged(int ox, int oy, int nx, int ny) {
@@ -67,6 +81,10 @@ public class Core extends BasicGame {
 	}
 	public void mouseMoved(int ox, int oy, int nx, int ny) {
 		super.mouseMoved(ox, oy, nx, ny);
+		float tempX = (float) input.getMouseX() / scaleX;
+		float tempY = (float) input.getMouseY() / scaleY;
+		Globals.mouseX = (int) tempX + Camera.x;
+		Globals.mouseY = (int) tempY;
 	}
 	
 	public void mouseReleased(int button, int x, int y) {
@@ -85,8 +103,10 @@ public class Core extends BasicGame {
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
-		g.scale((float) (Display.getWidth() + 150) / 1920, (float) (Display.getHeight()) / 1080);
-		g.translate(150, 0);
+		g.scale((float) (Display.getWidth() ) / 1920, (float) (Display.getHeight()) / 1080);
+		Globals.width = ( (float)  Display.getWidth()) / ((float) Display.getWidth() / 1920);
+		Globals.height = ( (float)  Display.getHeight()) / ((float) Display.getHeight() / 1080);
+		//g.translate(150, 0);
 		g.translate(-Camera.x, -Camera.y);
 		Game.draw(g);
 	}
@@ -101,6 +121,7 @@ public class Core extends BasicGame {
 			appgc.setDisplayMode(960, 540, false);
 			appgc.setTargetFrameRate(30);
 			appgc.start();
+			
 		} 
 		catch (Exception ex) {
 			ex.printStackTrace();

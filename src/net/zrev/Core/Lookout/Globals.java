@@ -32,9 +32,11 @@ public class Globals {
 	
 
 	public static int delta = 0;
+	public static float mouseX = 0, mouseY = 0; 
 	public static float scaleX = (float) Display.getWidth() / UserPreferences.startingResX;
 	public static float scaleY = (float) Display.getHeight() / UserPreferences.startingResY;
-	
+	public static float width = 1920;
+	public static float height = 1080;
 
 	public static boolean DEBUG = false;
 }

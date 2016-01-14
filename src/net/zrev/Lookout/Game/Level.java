@@ -45,6 +45,7 @@ public class Level {
 	}
 	
 	
+	public boolean isDone = false;
 	public Entity toRemove = null;
 	public ArrayList<Entity> gameObjects = new ArrayList<Entity>();
 }

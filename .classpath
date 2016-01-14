@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="lwjgl"/>
 	<classpathentry kind="src" path="levels"/>
 	<classpathentry kind="src" path="images"/>
+	<classpathentry kind="src" path="data"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Lookout-/lwjgl"/>

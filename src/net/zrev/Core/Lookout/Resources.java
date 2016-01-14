@@ -7,10 +7,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
 import net.zrev.Lookout.GameObjects.Jump;
 import net.zrev.Lookout.GameObjects.Player;
+import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.WinZone;
 
@@ -56,6 +58,10 @@ public class Resources {
 		case 5:
 			Animation jumpButton = new Animation(new SpriteSheet(new Image("jumpButton.png"), 64, 96), 100);
 			return new Jump(jumpButton, x, y, jumpButton.getWidth(), jumpButton.getHeight());
+		case 6:
+			Animation saw = new Animation(new SpriteSheet(new Image("saw.png"), 64, 64), 100);
+			return new Saw(saw, x, y, saw.getWidth(), saw.getHeight());
+		
 		}
 		
 		if(DEBUG) {

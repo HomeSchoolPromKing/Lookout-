@@ -1,14 +1,20 @@
 package net.zrev.Lookout.Account;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Scanner;
 
 public class UserPreferences {
 	
 	
 	public static void loadPreferences(){
+		String userPrefs = "";
 		try {
-			FileReader r;
+			Scanner s = new Scanner(new File("preferences.txt"));
+			while(s.hasNextLine()){
+				userPrefs += s.nextLine();
+			}
 		}
 		catch(Exception e) {
 			initPreferences();	

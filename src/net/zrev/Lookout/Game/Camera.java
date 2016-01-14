@@ -1,5 +1,7 @@
 package net.zrev.Lookout.Game;
 
+import net.zrev.Core.Lookout.Globals;
+
 import org.newdawn.slick.geom.Rectangle;
 
 import static net.zrev.Core.Lookout.Globals.*;
@@ -25,6 +27,7 @@ public class Camera {
 		else if (y < Game.minOffsetY)
 		    y = Game.minOffsetY;
 		    
+		
 		screen = new Rectangle(x, y, width, height);
 	}
 	

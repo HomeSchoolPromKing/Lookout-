@@ -75,6 +75,12 @@ public class Player extends Entity {
 					Game.p.jump();
 					Game.currentLevel.toRemove = objectRight;
 				}
+				else if(objectRight instanceof WinZone) {
+					Game.currentLevel.isDone = true;
+				}
+				else if(objectRight instanceof Saw) {
+					Game.p.health = 0;
+				}
 			}
 		}
 	}
@@ -92,6 +98,13 @@ public class Player extends Entity {
 				Game.p.jump();
 				Game.currentLevel.toRemove = objectLeft;
 			}
+			else if(objectLeft instanceof WinZone) {
+				Game.currentLevel.isDone = true;
+			}
+			else if(objectLeft instanceof Saw) {
+				Game.p.health = 0;
+			}
+			
 		}
 	}
 	
