@@ -2,13 +2,17 @@ package net.zrev.Core.Lookout;
 
 import static net.zrev.Core.Lookout.Globals.*;
 
+import java.awt.Font;
+import java.io.InputStream;
 import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.util.ResourceLoader;
 
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
@@ -28,14 +32,23 @@ public class Resources {
 		}
 		bg = new Image("nebula.png");
 
+		try {
+			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
+			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			awtFont2 = awtFont2.deriveFont(36f); // set font size
+			gameFont = new TrueTypeFont(awtFont2, false);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+
 		if(DEBUG) {
 			System.out.println("Done loading resources.");
 		}
 		initated = true;
 	}
 
-	
-	
 	public static Entity idToEntity(int id, float x, float y, String[] params) throws Exception{
 		switch(id) {
 		case 1:
@@ -46,7 +59,7 @@ public class Resources {
 			Animation floor = new Animation(new SpriteSheet(new Image("floor.png"), 128, 32), 100);
 			return new Floor(floor, x, y, floor.getWidth(), floor.getHeight());
 		case 3:
-			
+
 			Animation switchDir = null;
 			int direction = Integer.parseInt(params[3]);
 			if(direction == 1) {
@@ -65,15 +78,17 @@ public class Resources {
 		case 6:
 			Animation saw = new Animation(new SpriteSheet(new Image("saw.png"), 64, 64), 100);
 			return new Saw(saw, x, y, saw.getWidth(), saw.getHeight());
-		
+
 		}
-		
+
 		if(DEBUG) {
 			System.out.println("Could not find object with that ID.");
 		}
 		return null;
 	}
-	
+
+
+	public static TrueTypeFont gameFont;
 	public static Image bg;
 	public static boolean initated = false;
 }

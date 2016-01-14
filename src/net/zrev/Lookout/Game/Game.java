@@ -32,8 +32,11 @@ public class Game {
 
 	public static void logic(){
 		Camera.update();
-		if(Game.currentLevel.isDone) {
-			Game.nextLevel();
+		if(currentLevel.isCompleted) {
+			currentLevel.nextLevel();
+		}
+		else if(currentLevel.isFailed) {
+			currentLevel.resetLevel();
 		}
 	}
 
@@ -87,16 +90,6 @@ public class Game {
 		}
 		return null;
 	}
-
-	public static void nextLevel(){
-		Game.currentLevel.gameObjects.clear();
-		Game.currentLevel.isDone = false;
-		Game.currentLevel.loadLevel(++Game.currentLevel.levelId);
-		Game.items.clear();
-		Game.itemSelected = 0;
-		startGame();
-	}
-	
 	
 	public static void startGame(){
 		Camera.init(0, 0, 1920, 1080);
@@ -108,6 +101,8 @@ public class Game {
 		initItems();
 	}
 
+	
+	
 	public static Player p = null;
 
 	public static int gameWidth = 1920, gameHeight = 1080;

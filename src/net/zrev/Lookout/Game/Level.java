@@ -12,6 +12,8 @@ public class Level {
 	public Level(int level){
 		levelId = level;
 		loadLevel(level);
+		isFailed = false;
+		isCompleted = false;
 	}
 	
 	public void loadLevel(int level) {
@@ -27,6 +29,36 @@ public class Level {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	public static void resetLevel(){
+		Game.currentLevel.gameObjects.clear();
+		Game.currentLevel.isCompleted = false;
+		Game.currentLevel.isFailed = false;
+		Game.currentLevel.loadLevel(Game.currentLevel.levelId);
+		Game.items.clear();
+		Game.itemSelected = 0;
+		Game.startGame();
+	}
+
+	public static void goToLevel(int level){
+		Game.currentLevel.gameObjects.clear();
+		Game.currentLevel.isCompleted = false;
+		Game.currentLevel.loadLevel(level);
+		Game.items.clear();
+		Game.itemSelected = 0;
+		Game.startGame();
+	}
+	
+
+	public static void nextLevel(){
+		Game.currentLevel.gameObjects.clear();
+		Game.currentLevel.isCompleted = false;
+		Game.currentLevel.loadLevel(++Game.currentLevel.levelId);
+		Game.items.clear();
+		Game.itemSelected = 0;
+		Game.startGame();
 	}
 	
 	private void parseObject(String line){
@@ -45,8 +77,11 @@ public class Level {
 		}
 	}
 	
+	public boolean isFailed = false;
+	public boolean isCompleted = false;
+	
 	public int levelId = 0;
-	public boolean isDone = false;
+	
 	public Entity toRemove = null;
 	public ArrayList<Entity> gameObjects = new ArrayList<Entity>();
 }

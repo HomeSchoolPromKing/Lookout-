@@ -25,8 +25,8 @@ public class GameScreen {
 	public static void draw(Graphics g){
 		g.setColor(Color.black);
 		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
-		
-		
+
+
 		if(Resources.initated) {
 			//for(int i = -1920; i < 3840; i+=1920) {
 			//	for(int j = -1080; j < 2160; j+=1080) {
@@ -47,14 +47,17 @@ public class GameScreen {
 
 		if(Game.currentLevel.toRemove != null)
 			Game.currentLevel.gameObjects.remove(Game.currentLevel.toRemove);
-		
-		if (Game.currentLevel.isDone) {
-			g.pushTransform();
-			g.setColor(Color.black);
-			g.fillRect(Camera.x, Camera.y, Globals.width, Globals.height);
-			g.popTransform();
+
+
+		if (Game.currentLevel.isCompleted) {
+			NextLevelScreen.draw(g);
 		}
-		
+		if(Game.currentLevel.isFailed) {
+			GameOverScreen.draw(g);
+		}
+
+
+
 		g.drawAnimation(Game.items.get(Game.itemSelected).anim, Globals.mouseX, Globals.mouseY);
 	}
 }

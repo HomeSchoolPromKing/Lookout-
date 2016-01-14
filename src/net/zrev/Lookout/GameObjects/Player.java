@@ -30,15 +30,23 @@ public class Player extends Entity {
 	}
 
 	public void update(int delta){
-		super.update(delta);
-		moveX();
-		
-		whatToDoObjectRight();
-		whatToDoObjectLeft();
-		
-		Camera.x = x - ((Camera.width - 540) / 2) ;
-		Camera.y = y - (Camera.height / 2);
+		if(!Game.currentLevel.isFailed && !Game.currentLevel.isCompleted) {
+			super.update(delta);
+			moveX();
+			
+			whatToDoObjectRight();
+			whatToDoObjectLeft();
+			Camera.x = x - ((Camera.width - 540) / 2) ;
+			Camera.y = y - (Camera.height / 2);
+			checkIfDead();
+		}
 
+	}
+	
+	private void checkIfDead(){
+		if(Game.p.y > Game.maxOffsetY) {
+			Game.currentLevel.isFailed = true;
+		}
 	}
 	
 	private void moveX(){
@@ -76,7 +84,7 @@ public class Player extends Entity {
 					Game.currentLevel.toRemove = objectRight;
 				}
 				else if(objectRight instanceof WinZone) {
-					Game.currentLevel.isDone = true;
+					Game.currentLevel.isCompleted = true;
 				}
 				else if(objectRight instanceof Saw) {
 					Game.p.health = 0;
@@ -99,7 +107,7 @@ public class Player extends Entity {
 				Game.currentLevel.toRemove = objectLeft;
 			}
 			else if(objectLeft instanceof WinZone) {
-				Game.currentLevel.isDone = true;
+				Game.currentLevel.isCompleted = true;
 			}
 			else if(objectLeft instanceof Saw) {
 				Game.p.health = 0;
