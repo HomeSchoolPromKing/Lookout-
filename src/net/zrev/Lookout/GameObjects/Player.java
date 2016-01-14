@@ -49,6 +49,10 @@ public class Player extends Entity {
 	}
 	
 	private void moveX(){
+		if((objectLeft instanceof Wall) || (objectRight instanceof Wall)) {
+			movingLeft = false;
+			movingRight = false;
+		}
 		
 		if(objectLeft == null && !movingLeft && !movingRight) {
 			movingLeft = true;
@@ -111,7 +115,6 @@ public class Player extends Entity {
 			else if(objectLeft instanceof Saw) {
 				Game.p.health = 0;
 			}
-			
 		}
 	}
 	

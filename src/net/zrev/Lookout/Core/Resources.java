@@ -21,6 +21,7 @@ import net.zrev.Lookout.GameObjects.Jump;
 import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
+import net.zrev.Lookout.GameObjects.Wall;
 import net.zrev.Lookout.GameObjects.WinZone;
 import net.zrev.Lookout.Screens.GameScreen;
 
@@ -76,6 +77,9 @@ public class Resources {
 		case 6:
 			Animation saw = new Animation(new SpriteSheet(new Image("saw.png"), 64, 64), 100);
 			return new Saw(saw, x, y, saw.getWidth(), saw.getHeight());
+		case 7:
+			Animation wall = new Animation(new SpriteSheet(new Image("wall.png"), 32, 128), 100);
+			return new Wall(wall, x, y, wall.getWidth(), wall.getHeight());
 
 		}
 
