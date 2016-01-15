@@ -69,7 +69,8 @@ public class Resources {
 			}
 			return new SwitchDirections(switchDir, x, y, switchDir.getWidth(), switchDir.getHeight(), direction);
 		case 4:
-			Animation winZone = new Animation(new SpriteSheet(new Image("finish.png"), 128, 192), 100);
+			Animation winZone = new Animation(new SpriteSheet(new Image("finish.png"), 64, 128), 100);
+			winZone.setPingPong(true);
 			return new WinZone(winZone, x, y, winZone.getWidth(), winZone.getHeight());
 		case 5:
 			Animation jumpButton = new Animation(new SpriteSheet(new Image("jumpButton.png"), 64, 96), 100);
