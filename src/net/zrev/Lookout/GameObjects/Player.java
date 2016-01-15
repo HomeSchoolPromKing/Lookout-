@@ -3,6 +3,7 @@ package net.zrev.Lookout.GameObjects;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
+import net.zrev.Lookout.Game.Level;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -91,6 +92,7 @@ public class Player extends Entity {
 				}
 				else if(objectRight instanceof Saw) {
 					Game.p.health = 0;
+					Game.currentLevel.isFailed = true;
 				}
 			}
 		}
@@ -114,6 +116,7 @@ public class Player extends Entity {
 			}
 			else if(objectLeft instanceof Saw) {
 				Game.p.health = 0;
+				Game.currentLevel.isFailed = true;
 			}
 		}
 	}

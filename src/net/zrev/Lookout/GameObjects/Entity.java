@@ -101,7 +101,7 @@ public abstract class Entity implements Cloneable {
 			movingRight = false;
 		}
 		
-		if(objectBelow instanceof Floor && isSolid) {
+		if((objectBelow instanceof Floor || objectBelow instanceof Wall) && isSolid) {
 			if((objectLeft == null || !objectLeft.isSolid) && (objectRight == null ||!objectRight.isSolid )) {
 				if((this.y + this.height) > objectBelow.y) {
 					this.y = objectBelow.y - this.height;

@@ -1,4 +1,4 @@
+4	jumpButton.png	64	96
 1	floor.png	128	32
 2	switchDirLeft.png	96	64
 3	switchDirRight.png	96	64
-4	jumpButton.png	64	96

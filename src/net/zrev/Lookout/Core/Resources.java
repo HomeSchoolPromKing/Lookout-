@@ -80,7 +80,6 @@ public class Resources {
 		case 7:
 			Animation wall = new Animation(new SpriteSheet(new Image("wall.png"), 32, 128), 100);
 			return new Wall(wall, x, y, wall.getWidth(), wall.getHeight());
-
 		}
 
 		if(DEBUG) {
