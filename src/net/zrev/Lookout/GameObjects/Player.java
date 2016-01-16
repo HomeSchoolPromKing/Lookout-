@@ -6,6 +6,8 @@ import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.Game.Level;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -18,6 +20,7 @@ public class Player extends Entity {
 		isSolid = true;
 		initPlayerImages();
 		movingRight = true;
+		ai = new AfterImage(anim, x, y, width, height);
 	}
 
 	public void initPlayerImages() {
@@ -28,6 +31,12 @@ public class Player extends Entity {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void draw(Graphics g) {
+		super.draw(g);
+		if(!onGround)
+		g.drawAnimation(ai.anim, ai.x, ai.y, new Color(1f,1f,1f,0.5f));
 	}
 
 	public void update(int delta){
@@ -40,6 +49,7 @@ public class Player extends Entity {
 			Camera.x = x - ((Camera.width - 540) / 2) ;
 			Camera.y = y - (Camera.height / 2);
 			checkIfDead();
+			ai.update(delta);
 		}
 	}
 	
@@ -85,6 +95,7 @@ public class Player extends Entity {
 				}
 				else if(objectRight instanceof Jump) {
 					Game.p.jump();
+					ai.jump();
 					Game.currentLevel.toRemove = objectRight;
 				}
 				else if(objectRight instanceof WinZone) {
@@ -129,7 +140,7 @@ public class Player extends Entity {
 		this.health = health;
 	}
 	
-
+	private AfterImage ai = null;
 	public Animation runRight = null, runLeft = null;
 	private int health = 0;
 }

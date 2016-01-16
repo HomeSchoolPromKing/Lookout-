@@ -25,11 +25,11 @@ public class GameScreen {
 	public static void draw(Graphics g){
 		g.setColor(Color.black);
 		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
-
+		
 
 		if(Resources.initated) {
 			g.pushTransform();
-			g.scale(2.0F, 2.0F);
+			g.scale(3.0F, 3.5F);
 			g.drawImage(Resources.bg, -400, -400);
 			g.popTransform();
 		}

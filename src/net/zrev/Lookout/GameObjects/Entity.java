@@ -74,8 +74,9 @@ public abstract class Entity implements Cloneable {
 		
 		x += velocityX;
 		if(!onGround && isSolid) {
-		
-			velocityY += gravity;
+			
+			if(velocityY < maxFall)
+				velocityY += gravity;
 			y += velocityY;
 		}
 		
@@ -178,6 +179,7 @@ public abstract class Entity implements Cloneable {
 	public float velocityY = 0.0F;
 	public float friction = 0.5F;
 	public float gravity = 0.5f; 
+	private float maxFall = 16.5F;
 	public boolean isSolid = false;
 	public Animation anim;
 	public float x, y, width, height;

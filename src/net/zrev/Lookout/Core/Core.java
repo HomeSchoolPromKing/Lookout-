@@ -1,5 +1,10 @@
 package net.zrev.Lookout.Core;
 
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Controls;
 import net.zrev.Lookout.Game.Game;
@@ -26,8 +31,11 @@ public class Core extends BasicGame {
 		Display.setResizable(true);
 		gameC.setFullscreen(false);
 		gameC.setShowFPS(false);
-		appgc.setMouseGrabbed(true);
-		gameC.setMouseGrabbed(true);
+		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+
+		gc.setMouseCursor("/images/blankCursor.png", 0, 0);
+		//appgc.setMouseGrabbed(true);
+		//gameC.setMouseGrabbed(true);
 		input = gc.getInput();
 		try {
 			Resources.init();
@@ -82,8 +90,10 @@ public class Core extends BasicGame {
 		scaling();
 		Camera.update();
 		input = gc.getInput();
-		Globals.mouseX += Game.p.velocityX;
-		Globals.mouseY += Game.p.velocityY;
+		if(state == 1) {
+			Globals.mouseX += Game.p.velocityX;
+			Globals.mouseY += Game.p.velocityY;
+		}
 		Logic.logic();
 	}
 

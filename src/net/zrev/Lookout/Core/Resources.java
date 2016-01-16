@@ -32,7 +32,7 @@ public class Resources {
 			System.out.println("Loading resources.");
 		}
 		try {
-		bg = new Image("nebula.png");
+		bg = new Image("bg.png");
 			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(36f); // set font size

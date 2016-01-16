@@ -2,6 +2,7 @@ package net.zrev.Lookout.Core;
 
 
 import net.zrev.Lookout.Account.UserPreferences;
+import net.zrev.Lookout.Game.Camera;
 
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -11,9 +12,12 @@ public class Globals {
 	public static void scaling(){
 		if(Display.wasResized() || !Display.isResizable()) {
 			Display.setResizable(true);
+			Camera.width = Globals.width;
+			Camera.height = Globals.height;
 		}
 		Globals.width = ( (float)  Display.getWidth()) / ((float) Display.getWidth() / 1920);
 		Globals.height = ( (float)  Display.getHeight()) / ((float) Display.getHeight() / 1080);
+
 	}
 
 	public static int delta = 0;
