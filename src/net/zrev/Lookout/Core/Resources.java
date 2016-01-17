@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.ResourceLoader;
 
 import net.zrev.Lookout.Game.Game;
+import net.zrev.Lookout.GameObjects.Conveyor;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
 import net.zrev.Lookout.GameObjects.Jump;
@@ -32,7 +33,8 @@ public class Resources {
 			System.out.println("Loading resources.");
 		}
 		try {
-		bg = new Image("bg.png");
+			bg = new Image("bg.png");
+			bg55 = new Image("bg55.png");
 			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(36f); // set font size
@@ -51,7 +53,7 @@ public class Resources {
 	public static Entity idToEntity(int id, float x, float y, String[] params) throws Exception{
 		switch(id) {
 		case 1:
-			Animation player = new Animation(new SpriteSheet(new Image("characterRunRight.png"), 34, 64), 150);
+			Animation player = new Animation(new SpriteSheet(new Image("characterRunRight.png"), 64, 128), 150);
 			return new Player(player, x, y, player.getWidth(), player.getHeight());
 
 		case 2:
@@ -81,6 +83,9 @@ public class Resources {
 		case 7:
 			Animation wall = new Animation(new SpriteSheet(new Image("wall.png"), 32, 128), 100);
 			return new Wall(wall, x, y, wall.getWidth(), wall.getHeight());
+		case 8:
+			Animation conveyorRight = new Animation(new SpriteSheet( new Image("conveyorRight.png"), 192, 64), 100);
+			return new Conveyor(conveyorRight, x, y, conveyorRight.getWidth(), conveyorRight.getHeight());
 		}
 
 		if(DEBUG) {
@@ -90,7 +95,8 @@ public class Resources {
 	}
 
 
+	
 	public static TrueTypeFont gameFont;
-	public static Image bg;
+	public static Image bg, bg55;
 	public static boolean initated = false;
 }

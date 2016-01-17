@@ -8,6 +8,9 @@ import java.util.Scanner;
 public class UserPreferences {
 	
 	
+	
+	
+	
 	public static void loadPreferences(){
 		String userPrefs = "";
 		try {

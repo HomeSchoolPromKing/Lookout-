@@ -8,6 +8,8 @@ import java.util.Random;
 import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
+import net.zrev.Lookout.Decorative.BackgroundLayer;
+import net.zrev.Lookout.Decorative.BackgroundShape;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
@@ -18,21 +20,14 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 
 public class GameScreen {
 
 	public static void draw(Graphics g){
-		g.setColor(Color.black);
-		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
+		BackgroundLayer.draw(g);
 		
-
-		if(Resources.initated) {
-			g.pushTransform();
-			g.scale(3.0F, 3.5F);
-			g.drawImage(Resources.bg, -400, -400);
-			g.popTransform();
-		}
 		for(Entity e : Game.currentLevel.gameObjects) {
 			e.update(Globals.delta);
 			

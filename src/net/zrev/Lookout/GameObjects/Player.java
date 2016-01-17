@@ -1,5 +1,7 @@
 package net.zrev.Lookout.GameObjects;
 
+import java.util.Random;
+
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
@@ -25,8 +27,8 @@ public class Player extends Entity {
 
 	public void initPlayerImages() {
 		try {
-			runRight = new Animation(new SpriteSheet(new Image("characterRunRight.png"), 34, 64), 150);
-			runLeft = new Animation(new SpriteSheet(new Image("characterRunLeft.png"), 34, 64), 150);
+			runRight = new Animation(new SpriteSheet(new Image("characterRunRight.png"), 64, 128), 150);
+			runLeft = new Animation(new SpriteSheet(new Image("characterRunLeft.png"), 64, 128), 150);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -42,7 +44,12 @@ public class Player extends Entity {
 	public void update(int delta){
 		if(!Game.currentLevel.isFailed && !Game.currentLevel.isCompleted) {
 			super.update(delta);
-			moveX();
+			if(!isHurt) {
+				moveX();
+			}
+			else {
+				jumpBack();
+			}
 			
 			whatToDoObjectRight();
 			whatToDoObjectLeft();
@@ -50,6 +57,55 @@ public class Player extends Entity {
 			Camera.y = y - (Camera.height / 2);
 			checkIfDead();
 			ai.update(delta);
+		}
+	}
+	
+	public void jumpBack(){
+		if(isHurt) {
+			if(movingLeft && !movingRight) {
+				if(velocityX < 0) {
+					velocityX = 0.0F;
+				}
+				if((velocityX + 1.0F) < maxJumpBackX) {
+					velocityX += 1.0F;
+				}
+				else {
+					isHurt = false;
+					movingRight = true;
+					movingLeft = false;
+				}
+			}
+			else if(movingRight && !movingLeft) {
+				if(velocityX > 0) {
+					velocityX = 0.0F;
+				}
+				if((Math.abs(velocityX) - 1.0F) < maxJumpBackX) {
+					velocityX -= 1.0F;
+				}
+				else {
+					isHurt = false;
+					movingRight = false;
+					movingLeft = true;
+				}
+			}
+		}
+	}
+	
+	//added ouch method	
+	private void ouch() {
+		if (movingRight) {
+			isHurt = true;
+			//Game.p.health -= 1;
+			onGround = false;
+			Game.p.velocityY = -6.0f;
+			Game.p.velocityX = -3.0f;
+		}
+		else if (movingLeft) {
+			isHurt = true;
+			//Game.p.health -= 1;
+			onGround = false;
+			Game.p.velocityY = -6.0f;
+			Game.p.velocityX = 3.0f;
 		}
 	}
 	
@@ -74,11 +130,11 @@ public class Player extends Entity {
 		
 		if(super.movingRight && !super.movingLeft) {
 			anim = runRight;
-			velocityX = 4.5F;
+			velocityX = 8.5F;
 		}
 		else if(super.movingLeft && !super.movingRight) {
 			anim = runLeft;
-			velocityX = -4.5F;
+			velocityX = -8.5F;
 		}
 		else if(!movingLeft && !movingRight) {
 			velocityX = 0F;
@@ -103,7 +159,8 @@ public class Player extends Entity {
 				}
 				else if(objectRight instanceof Saw) {
 					Game.p.health = 0;
-					Game.currentLevel.isFailed = true;
+					//Game.currentLevel.isFailed = true;
+					ouch();
 				}
 			}
 		}
@@ -126,8 +183,9 @@ public class Player extends Entity {
 				Game.currentLevel.isCompleted = true;
 			}
 			else if(objectLeft instanceof Saw) {
+				ouch();
 				Game.p.health = 0;
-				Game.currentLevel.isFailed = true;
+				//Game.currentLevel.isFailed = true;
 			}
 		}
 	}
@@ -143,4 +201,5 @@ public class Player extends Entity {
 	private AfterImage ai = null;
 	public Animation runRight = null, runLeft = null;
 	private int health = 0;
+
 }

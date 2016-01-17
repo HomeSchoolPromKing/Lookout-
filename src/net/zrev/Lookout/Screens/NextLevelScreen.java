@@ -7,5 +7,6 @@ public class NextLevelScreen {
 	public static void draw(Graphics g) {
 		
 	}
+	
 
 }

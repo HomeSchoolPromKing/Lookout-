@@ -1,5 +1,7 @@
 package net.zrev.Lookout.GameObjects;
 
+import java.util.Random;
+
 import net.zrev.Lookout.Game.Game;
 
 import org.newdawn.slick.Animation;
@@ -42,7 +44,16 @@ public abstract class Entity implements Cloneable {
 			g.draw(aboveCollision);
 		}
 		else {
+			if(Game.p.isHurt) {
+				//g.pushTransform();
+				if(Math.abs(Game.p.velocityX) < maxJumpBackX / 2) {
+					float xShift = new Random().nextBoolean() ? -1 : 1;
+					g.translate(new Random().nextInt(1)+1 * xShift, new Random().nextInt(1)+1 * xShift);
+				}
+				//g.popTransform();
+			}
 			g.drawAnimation(anim, x, y);
+			//g.drawAnimation(anim, x, y, new Color(255, 255, 0, 1.0F));
 		}
 	}
 	public Entity clone() {
@@ -108,6 +119,19 @@ public abstract class Entity implements Cloneable {
 					this.y = objectBelow.y - this.height;
 					onGround = true;
 					velocityY = 0.0F;
+				}
+			}
+		}
+		
+		
+		if (objectBelow instanceof Conveyor && isSolid) {
+			if((objectLeft == null || !objectLeft.isSolid) && (objectRight == null ||!objectRight.isSolid )) {
+				if((this.y + this.height) > objectBelow.y) {
+					this.y = objectBelow.y - this.height;
+					onGround = true;
+					velocityY = 0.0F;
+					//This needs work, right now it will just accelerate indefinitely --z
+					velocityX += 3;
 				}
 			}
 		}
@@ -181,7 +205,10 @@ public abstract class Entity implements Cloneable {
 	public float gravity = 0.5f; 
 	private float maxFall = 16.5F;
 	public boolean isSolid = false;
+	public boolean isHurt = false;
 	public Animation anim;
+	public float maxJumpBackX = 8.0F;
+	public float maxJumpBackY = 3.0F;
 	public float x, y, width, height;
 	private Rectangle boundingBox;
 }

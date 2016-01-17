@@ -15,7 +15,7 @@ public class GameEditorScreen {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Globals.width, Globals.height);
 		
-		g.setColor(new Color(255,255,255, 0.2F));
+		//g.setColor(new Color(255,255,255, 0.2F));
 		for(int i = 0; i < Globals.width * 4; i+=32) {
 			g.drawLine(i + Camera.x, 0, i + Camera.x, Globals.width * 4);
 		}
