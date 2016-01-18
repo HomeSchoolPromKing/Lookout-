@@ -7,10 +7,14 @@ import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
+import net.zrev.Lookout.Game.Level;
+import net.zrev.Lookout.GameEditor.GameEditor;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import static net.zrev.Lookout.Core.Globals.*;
 public class BackgroundLayer {
 
 
@@ -21,17 +25,30 @@ public class BackgroundLayer {
 		if(Resources.initated) {
 			g.pushTransform();
 			g.scale(2.0F, 2.5F);
-			g.drawImage(Resources.bg, -400, -400);
+			//g.drawImage(Resources.bg, Camera.x, Camera.y);
 			g.popTransform();
 			g.drawImage(Resources.bg55, Camera.x, Camera.y);
 		}
-
-		for(BackgroundShape bs : backgroundShapes) {
-			bs.draw(g);
-			bs.setX(bs.getX() - bs.speedX);
-			bs.setY(bs.getY() - bs.speedY);
-			bs.update();
+		
+		for(NorthernLights nl : theLights) {
+			nl.draw(g);
+			nl.update();
 		}
+		
+		
+		if(state == IN_GAME || (state == IN_EDITOR && !GameEditor.hideDecorations)) {
+			for(BackgroundShape bs : backgroundShapes) {
+				bs.draw(g);
+				bs.setX(bs.getX() - bs.speedX);
+				bs.setY(bs.getY() - bs.speedY);
+				bs.update();
+			}
+			
+			for(Decoration a : Level.decorations) {
+				g.drawAnimation(a.a, a.x, a.y);
+			}
+		}
+		
 		update();
 	}
 
@@ -111,6 +128,9 @@ public class BackgroundLayer {
 		}
 	}
 
+	
+	
+	public static ArrayList<NorthernLights> theLights = new ArrayList<NorthernLights>();
 	public static ArrayList<BackgroundShape> backgroundShapes = new ArrayList<BackgroundShape>();
 	public static BackgroundShape toRemove = null;
 }

@@ -40,6 +40,6 @@ public class GameScreen {
 		if(Game.currentLevel.toRemove != null)
 			Game.currentLevel.gameObjects.remove(Game.currentLevel.toRemove);
 		
-		g.drawAnimation(Game.items.get(Game.itemSelected).anim, Globals.mouseX, Globals.mouseY);
+		g.drawAnimation(Game.currentLevel.inventory.get(Game.itemSelected).anim, Globals.mouseX, Globals.mouseY);
 	}
 }

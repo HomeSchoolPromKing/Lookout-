@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import net.zrev.Lookout.Decorative.BackgroundLayer;
+import net.zrev.Lookout.Decorative.NorthernLights;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Controls;
 import net.zrev.Lookout.Game.Game;
@@ -31,12 +33,20 @@ public class Core extends BasicGame {
 		Display.setResizable(true);
 		gameC.setFullscreen(false);
 		gameC.setShowFPS(false);
-		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-
-		gc.setMouseCursor("/images/blankCursor.png", 0, 0);
-		//appgc.setMouseGrabbed(true);
-		//gameC.setMouseGrabbed(true);
+		
 		input = gc.getInput();
+		
+		float absstepmax = 50;
+		float ymin = -100;
+		float ymax = 100;
+		float y = 5;
+		
+		for(int i = 0; i < Globals.width; i+=10) {
+			y += (Math.random() * (2F * absstepmax) - absstepmax - 1F);
+			y = Math.max(ymin, Math.min(ymax, y));
+			BackgroundLayer.theLights.add(new NorthernLights(i, y));
+			
+		}
 		try {
 			Resources.init();
 			Game.startGame();
@@ -45,6 +55,7 @@ public class Core extends BasicGame {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
@@ -98,6 +109,18 @@ public class Core extends BasicGame {
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
+		if(Display.getWidth() != gc.getWidth() || Display.getHeight() != gc.getHeight()) {
+			try {
+				scaleX = (float) Display.getWidth() / 1920;
+				scaleY = (float) (Display.getHeight()) / 1080;
+				appgc.setDisplayMode(Display.getWidth(), Display.getHeight(), false);
+				Display.setResizable(true);
+			} 
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		g.scale((float) (Display.getWidth() ) / 1920, (float) (Display.getHeight()) / 1080);
 		g.translate(-Camera.x, -Camera.y);
 		Screen.draw(g);
@@ -118,7 +141,6 @@ public class Core extends BasicGame {
 		}
 	}
 	
-	public static int state = 1;
 	public static int lastW = 960, lastH = 540;
 	public static AppGameContainer appgc;
 	public static GameContainer gameC;

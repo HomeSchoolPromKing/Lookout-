@@ -17,12 +17,12 @@ import org.newdawn.slick.geom.Shape;
 
 public class Player extends Entity {
 
-	public Player(Animation anim, float x, float y, float width, float height){
-		super(anim, x, y, width, height);
+	public Player(int id, Animation anim, float x, float y, float width, float height){
+		super(id, anim, x, y, width, height);
 		isSolid = true;
 		initPlayerImages();
 		movingRight = true;
-		ai = new AfterImage(anim, x, y, width, height);
+		ai = new AfterImage(-999, anim, x, y, width, height);
 	}
 
 	public void initPlayerImages() {
@@ -116,7 +116,7 @@ public class Player extends Entity {
 	}
 	
 	private void moveX(){
-		if((objectLeft instanceof Wall) || (objectRight instanceof Wall)) {
+		if((objectLeft instanceof Floor) || (objectRight instanceof Floor)) {
 			movingLeft = false;
 			movingRight = false;
 		}

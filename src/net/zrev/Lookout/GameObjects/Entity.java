@@ -13,7 +13,7 @@ import static net.zrev.Lookout.Core.Globals.*;
 
 public abstract class Entity implements Cloneable {
 
-	public Entity(Animation anim, float x, float y, float width, float height){
+	public Entity(int id, Animation anim, float x, float y, float width, float height){
 		boundingBox = new Rectangle(x, y, width, height);
 		
 		aboveCollision = new Rectangle(x, y - 5, width, 5);
@@ -22,6 +22,7 @@ public abstract class Entity implements Cloneable {
 		rightCollision = new Rectangle(x + width - 1, y, 1, height - 10);
 		leftCollision = new Rectangle(x, y, 1, height - 10);
 		this.anim = anim;
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -52,8 +53,12 @@ public abstract class Entity implements Cloneable {
 				}
 				//g.popTransform();
 			}
-			g.drawAnimation(anim, x, y);
-			//g.drawAnimation(anim, x, y, new Color(255, 255, 0, 1.0F));
+			if(!isSelected) {
+				g.drawAnimation(anim, x, y);
+			}
+			else {
+				g.drawAnimation(anim, x, y, new Color(255, 255, 0, 1.0F));
+			}
 		}
 	}
 	public Entity clone() {
@@ -64,8 +69,8 @@ public abstract class Entity implements Cloneable {
 			return null;
 		}
 	}
-
-	public void update(int delta){
+	
+	public void updateBounds(){
 		
 		aboveCollision = new Rectangle(x, y - 5, width, 5);
 		objectAbove = null;
@@ -79,16 +84,24 @@ public abstract class Entity implements Cloneable {
 		rightCollision = new Rectangle(x + (width / 2) - 1, y, width / 2, height - 15);
 		objectRight = null;
 		
-		
 		boundingBox = new Rectangle(x, y, width, height);
-		
-		
+	}
+
+	public void update(int delta){
+		updateBounds();
 		x += velocityX;
 		if(!onGround && isSolid) {
-			
-			if(velocityY < maxFall)
-				velocityY += gravity;
-			y += velocityY;
+			if(velocityY < maxFall) {
+				if(objectBelow == null)
+					velocityY += gravity;
+			}
+			if(velocityY < 0) {
+				if(objectAbove == null)
+					y+=velocityY;
+			}
+			else {
+				y += velocityY;
+			}
 		}
 		
 		for(Entity e : Game.currentLevel.gameObjects) {
@@ -113,7 +126,7 @@ public abstract class Entity implements Cloneable {
 			movingRight = false;
 		}
 		
-		if((objectBelow instanceof Floor || objectBelow instanceof Wall) && isSolid) {
+		if((objectBelow instanceof Floor) && isSolid) {
 			if((objectLeft == null || !objectLeft.isSolid) && (objectRight == null ||!objectRight.isSolid )) {
 				if((this.y + this.height) > objectBelow.y) {
 					this.y = objectBelow.y - this.height;
@@ -124,17 +137,6 @@ public abstract class Entity implements Cloneable {
 		}
 		
 		
-		if (objectBelow instanceof Conveyor && isSolid) {
-			if((objectLeft == null || !objectLeft.isSolid) && (objectRight == null ||!objectRight.isSolid )) {
-				if((this.y + this.height) > objectBelow.y) {
-					this.y = objectBelow.y - this.height;
-					onGround = true;
-					velocityY = 0.0F;
-					//This needs work, right now it will just accelerate indefinitely --z
-					velocityX += 3;
-				}
-			}
-		}
 	}
 
 	public void collisionRight(Entity e){
@@ -191,8 +193,12 @@ public abstract class Entity implements Cloneable {
 		this.anim = anim;
 	}
 	
+	public String save(){
+		return id + "\t" + x + "\t" + y + "\t";
+	}
 	
 	
+	public int id;
 	public boolean wasPlaced = false;
 	public Entity objectLeft = null, objectRight = null, objectAbove = null, objectBelow = null;
 	private Rectangle leftCollision, rightCollision, aboveCollision, belowCollision;
@@ -210,5 +216,6 @@ public abstract class Entity implements Cloneable {
 	public float maxJumpBackX = 8.0F;
 	public float maxJumpBackY = 3.0F;
 	public float x, y, width, height;
+	public boolean isSelected = false;
 	private Rectangle boundingBox;
 }

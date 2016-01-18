@@ -1,13 +1,13 @@
 package net.zrev.Lookout.Game;
 
-import static net.zrev.Lookout.Core.Globals.scaleX;
-import static net.zrev.Lookout.Core.Globals.scaleY;
+import static net.zrev.Lookout.Core.Globals.*;
 import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
+import net.zrev.Lookout.Core.Logic;
 import net.zrev.Lookout.GameEditor.GameEditor;
 
 public class Controls {
-	
+
 	public static void keyPressed(int key, char c) {
 		if(key == 200) {
 			Camera.y -= 32;
@@ -22,7 +22,7 @@ public class Controls {
 			Camera.x += 32;
 		}
 		if(Character.isDigit(c)) {
-			if(Integer.parseInt(c+"") <= Game.items.size()) {
+			if(Integer.parseInt(c+"") <= Game.currentLevel.inventory.size()) {
 				Game.itemSelected = Integer.parseInt(c+"")-1;
 			}
 			if(Integer.parseInt(c+"") <= GameEditor.items.size()) {
@@ -30,13 +30,18 @@ public class Controls {
 			}
 		}
 		if(c == 'g' || c == 'G'){
-			if(Core.state == 1) {
+			if(state == IN_GAME) {
 				GameEditor.init();
-				Core.state = 2;
+				Logic.changeState();
+				state = IN_EDITOR;
 			}
-			else if(Core.state == 2) {
-				Core.state = 1;
+			else if(state == IN_EDITOR) {
+				Logic.changeState();
+				state = IN_GAME;
 			}
+		}
+		if(state == IN_EDITOR) {
+			GameEditor.keyPressed(key, c);
 		}
 	}
 
@@ -44,10 +49,17 @@ public class Controls {
 	}
 
 	public static void mousePressed(int button, int x, int y) {
-		if(button == 0)
-			Game.placeObject();
-		else if(button == 1) {
-			Game.removeObject();
+		if(state == IN_GAME) {
+			if(button == 0) {
+				Logic.placeObject();
+			}
+			else if(button == 1 && state == IN_GAME) {
+				Logic.removeObject();
+			}
+		}
+		
+		if(state == IN_EDITOR) {
+			GameEditor.mousePressed(button, x, y);
 		}
 	}
 
@@ -59,22 +71,32 @@ public class Controls {
 			}
 		}
 		if(change > 0 ) {
-			if (Game.itemSelected + change <= Game.items.size() - 1) {
+			if (Game.itemSelected + change <= Game.currentLevel.inventory.size() - 1) {
 				Game.itemSelected++;
 			}
 		}
+		if(state == IN_EDITOR) {
+			GameEditor.mouseWheelMoved(change);
+		}
 	}
-	
+
 	public static void mouseDragged(int ox, int oy, int nx, int ny) {
+		if(state == IN_EDITOR) {
+			GameEditor.mouseDragged(ox, oy, nx,ny);
+		}
 	}
-	
+
 	public static void mouseMoved(int ox, int oy, int nx, int ny) {
 		float tempX = (float) Core.input.getMouseX() / scaleX;
 		float tempY = (float) Core.input.getMouseY() / scaleY;
 		Globals.mouseX = (int) tempX + Camera.x + Game.p.velocityX;
-		Globals.mouseY = (int) tempY + Game.p.velocityY;
+		Globals.mouseY = (int) tempY + Game.p.velocityY + Camera.y;
+
+		if(state == IN_EDITOR) {
+			GameEditor.mouseMoved(ox, oy, nx,ny);
+		}
 	}
-	
+
 	public static void mouseReleased(int button, int x, int y) {
 	}
 }

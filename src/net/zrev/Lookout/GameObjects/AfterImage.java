@@ -10,8 +10,8 @@ import org.newdawn.slick.Animation;
 
 public class AfterImage extends Entity {
 
-	public AfterImage(Animation anim, float x, float y, float width, float height){
-		super(anim, x, y, width, height);
+	public AfterImage(int id, Animation anim, float x, float y, float width, float height){
+		super(id, anim, x, y, width, height);
 		isSolid = true;
 		movingRight = true;
 		init();
