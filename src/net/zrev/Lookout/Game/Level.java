@@ -164,8 +164,8 @@ public class Level {
 			Animation player = new Animation(new SpriteSheet(new Image("characterRunRight.png"), 64, 128), 150);
 			return new Player(id, player, x, y, player.getWidth(), player.getHeight());
 		case 2:
-			Animation floor = new Animation(new SpriteSheet(new Image("floor.png"), 128, 64), 100);
-			return new Floor(id, floor, x, y, floor.getWidth(), floor.getHeight());
+			Animation floor = new Animation(new SpriteSheet(new Image("floor.png"), 64, 64), 100);
+			return new Floor(id, floor, x, y, floor.getWidth(), floor.getHeight(), params);
 		case 3:
 			Animation switchDir = null;
 			int direction = Integer.parseInt(params[3]);

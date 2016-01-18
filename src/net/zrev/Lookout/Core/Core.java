@@ -26,26 +26,26 @@ public class Core extends BasicGame {
 	public Core(String gamename) {
 		super(gamename);
 	}
-	
+
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		gameC = gc;
 		Display.setResizable(true);
 		gameC.setFullscreen(false);
 		gameC.setShowFPS(false);
-		
+
 		input = gc.getInput();
-		
+
 		float absstepmax = 50;
 		float ymin = -100;
 		float ymax = 100;
 		float y = 5;
-		
+
 		for(int i = 0; i < Globals.width; i+=10) {
 			y += (Math.random() * (2F * absstepmax) - absstepmax - 1F);
 			y = Math.max(ymin, Math.min(ymax, y));
 			BackgroundLayer.theLights.add(new NorthernLights(i, y));
-			
+
 		}
 		try {
 			Resources.init();
@@ -55,8 +55,8 @@ public class Core extends BasicGame {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
 		Controls.keyPressed(key, c);
@@ -76,28 +76,27 @@ public class Core extends BasicGame {
 		super.mouseWheelMoved(change);
 		Controls.mouseWheelMoved(change);
 	}
-	
+
 	public void mouseDragged(int ox, int oy, int nx, int ny) {
 		super.mouseDragged(ox, oy, nx, ny);
 		Controls.mouseDragged(ox, oy, nx, ny);
 	}
-	
+
 	public void mouseMoved(int ox, int oy, int nx, int ny) {
 		super.mouseMoved(ox, oy, nx, ny);
 		Controls.mouseMoved(ox, oy, nx, ny);
 	}
-	
+
 	public void mouseReleased(int button, int x, int y) {
 		super.mouseReleased(button, x, y);
 		Controls.mouseReleased(button, x, y);
 	}
-	
+
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		if(delta >= 30) {
 			Globals.delta = delta;
 		}
-		
 		scaling();
 		Camera.update();
 		input = gc.getInput();
@@ -106,6 +105,14 @@ public class Core extends BasicGame {
 			Globals.mouseY += Game.p.velocityY;
 		}
 		Logic.logic();
+		
+        if (shakeAmt>0f) {
+            shakeTime -= delta;
+            //new shakeX/Y
+            if (shakeTime <= 0) {
+                shake();
+            }
+        }	
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -120,10 +127,14 @@ public class Core extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		
+
 		g.scale((float) (Display.getWidth() ) / 1920, (float) (Display.getHeight()) / 1080);
 		g.translate(-Camera.x, -Camera.y);
+        if (shakeX!=0 && shakeY!=0)
+            g.translate(shakeX, shakeY);
 		Screen.draw(g);
+        if (shakeX!=0 && shakeY!=0)
+            g.translate(-shakeX, -shakeY);
 	}
 
 	//http://stackoverflow.com/questions/7168747/java-creating-self-extracting-jar-that-can-extract-parts-of-itself-out-of-the-a
@@ -140,7 +151,35 @@ public class Core extends BasicGame {
 			ex.printStackTrace();
 		}
 	}
+
+	public static void shake() {
+		shakeX = (float)(Math.random()*shakeAmt);
+		shakeY = (float)(Math.random()*shakeAmt);
+		if (SHAKE_SNAP) {
+			shakeX = (int)shakeX;
+			shakeY = (int)shakeY;
+		}
+		shakeTime = SHAKE_DELAY;
+		shakeAmt -= SHAKE_DECAY*SHAKE_INTENSITY;
+		if (shakeAmt<0f)
+			shakeAmt = 0f;
+	}
 	
+    public static final boolean SHAKE_SNAP = false;
+    
+    /** How far the shake should extend in pixels. */
+    public static final int SHAKE_INTENSITY = 15;
+    
+    public static final float SHAKE_DECAY = 0.03f;
+    
+    /** Delay in ms between each new shake. */
+    public static final int SHAKE_DELAY = 45;
+
+	private static int shakeTime = SHAKE_DELAY;
+	public static float shakeAmt = 0f;
+	private static float shakeX = 0f;
+	private static float shakeY = 0f;
+
 	public static int lastW = 960, lastH = 540;
 	public static AppGameContainer appgc;
 	public static GameContainer gameC;

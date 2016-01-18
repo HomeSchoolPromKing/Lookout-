@@ -89,6 +89,14 @@ public abstract class Entity implements Cloneable {
 
 	public void update(int delta){
 		updateBounds();
+		for(Entity e : Game.currentLevel.gameObjects) {
+			if(e != this) {
+				collisionLeft(e);
+				collisionRight(e);
+				collisionBelow(e);
+				collisionAbove(e);
+			}
+		}
 		x += velocityX;
 		if(!onGround && isSolid) {
 			if(velocityY < maxFall) {
@@ -104,14 +112,6 @@ public abstract class Entity implements Cloneable {
 			}
 		}
 		
-		for(Entity e : Game.currentLevel.gameObjects) {
-			if(e != this) {
-				collisionLeft(e);
-				collisionRight(e);
-				collisionBelow(e);
-				collisionAbove(e);
-			}
-		}
 		if(objectBelow == null && isSolid) {
 			onGround = false;
 		}
