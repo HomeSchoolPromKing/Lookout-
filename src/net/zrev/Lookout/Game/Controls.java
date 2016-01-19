@@ -49,6 +49,7 @@ public class Controls {
 	}
 
 	public static void mousePressed(int button, int x, int y) {
+		Logic.mousePressed = true;
 		if(state == IN_GAME) {
 			if(button == 0) {
 				Logic.placeObject();
@@ -98,5 +99,6 @@ public class Controls {
 	}
 
 	public static void mouseReleased(int button, int x, int y) {
+		Logic.mousePressed = false;
 	}
 }

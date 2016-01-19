@@ -1,6 +1,7 @@
 package net.zrev.Lookout.Screens;
 
 import net.zrev.Lookout.Core.Globals;
+import net.zrev.Lookout.Core.Logic;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
 import net.zrev.Lookout.Game.Camera;
@@ -8,9 +9,14 @@ import net.zrev.Lookout.Game.Game;
 import static net.zrev.Lookout.GameEditor.GameEditor.*;
 import net.zrev.Lookout.GameEditor.GameEditor;
 import net.zrev.Lookout.GameObjects.Entity;
+import net.zrev.Lookout.GameObjects.Floor;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -60,6 +66,7 @@ public class GameEditorScreen {
 		drawHideDecorations(g);
 		drawLinesBox(g);
 		drawItemSelectArea(g);
+		drawTileSetOptions(g);
 	}
 	
 	
@@ -70,7 +77,6 @@ public class GameEditorScreen {
 			Rectangle innerBox = new Rectangle(100 + Camera.x + 5, 105 + Camera.y, Globals.width - 510, Globals.height - 160);
 			GradientFill innerBoxFill = new GradientFill(200,300,new Color(0.8F, 0.8F, 0.8F, 0.75F),200,1200, new Color(0.5F, 0.5F, 0.5F, 0.75F));
 			g.fill(innerBox, innerBoxFill);
-		
 			drawItems(g);
 		}
 	}
@@ -119,6 +125,37 @@ public class GameEditorScreen {
 
 	}
 	
+	private static void drawTileSetOptions(Graphics g){
+		if(tileSet == null) {
+			try {
+				tileSet = new Animation(new SpriteSheet(new Image("tileSet.png"), 64, 64), 100);
+				tileSet.stop();
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			for(int i = 0; i < tileSet.getFrameCount(); i++) {
+				if(event != null && event.intersects(new Rectangle((Globals.width - 250) + i * 64, Globals.height/2, 64,64))) {
+					if(Logic.mousePressed) {
+						if(items.get(itemSelected) instanceof Floor) {
+							Floor f = (Floor) items.get(itemSelected);
+							f.tileId = i;
+							f.update(0);
+							items.set(items.indexOf(items.get(itemSelected)), f);
+						}
+						
+					}
+					tileSet.getImage(i).draw((Globals.width - 250) + i * 64, Globals.height/2, new Color(255, 0, 0, 50));
+				}
+				else {
+					tileSet.getImage(i).draw((Globals.width - 250) + i * 64, Globals.height/2);
+				}
+			}
+		}
+		
+	}
+	
 	private static void drawSnapBox(Graphics g){
 		if(snapObjects) {
 			g.setColor(Color.green);
@@ -135,5 +172,7 @@ public class GameEditorScreen {
 	private static void drawItemGhost(Graphics g){
 		g.drawAnimation(items.get(itemSelected).anim, Globals.mouseX, Globals.mouseY);
 	}
+	
+	
 	
 }

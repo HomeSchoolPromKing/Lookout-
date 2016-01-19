@@ -182,8 +182,8 @@ public class GameEditor {
 			e.printStackTrace();
 		}
 	}
-
-
+	
+	public static Animation tileSet;
 	public static Rectangle event;
 	public static boolean showItemSelect = false;
 	public static boolean hideDecorations = false;
@@ -192,5 +192,4 @@ public class GameEditor {
 	public static int itemSelected = 0;
 	public static ArrayList<Entity> items = new ArrayList<Entity>();
 	public static Rectangle snapBox, hideDecBox, linesBox;
-
 }

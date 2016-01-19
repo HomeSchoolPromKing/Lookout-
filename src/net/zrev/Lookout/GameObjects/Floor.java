@@ -22,7 +22,7 @@ public class Floor extends Entity {
 				super.anim.setCurrentFrame(tileId);
 				super.anim.stop();
 			}
-			
+
 		} 
 		catch (SlickException e) {
 			e.printStackTrace();
@@ -35,10 +35,19 @@ public class Floor extends Entity {
 	public String save(){
 		return id + "\t" + x + "\t" + y + "\t" + tileId;
 	}
-	
-	public void update(int delta){
 
+	public void update(int delta){
+		try {
+			if(tileId != anim.getFrame()) {
+				super.anim = new Animation(new SpriteSheet(new Image("tileSet.png"), 64, 64), 100);
+				super.anim.setCurrentFrame(tileId);
+				super.anim.stop();
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	int tileId = 2;
+
+	public int tileId = 2;
 }
