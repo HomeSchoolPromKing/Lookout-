@@ -62,5 +62,6 @@ public class Logic {
 
 	}
 	
+	public static boolean shiftHeld = false;
 	public static boolean mousePressed = false;
 }

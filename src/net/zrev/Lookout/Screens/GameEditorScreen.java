@@ -24,6 +24,7 @@ public class GameEditorScreen {
 
 	
 	public static void draw(Graphics g) {
+		GameEditor.update();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Globals.width, Globals.height);
 		
@@ -85,12 +86,21 @@ public class GameEditorScreen {
 		int col = 0;
 		int row = 0;
 		for(int i = 0; i < items.size(); i++) {
-			if(i % 4 == 0 && i > 0) {
+			if(i % 5 == 0 && i > 0) {
 				col++;
 				row = 0;
 			}
 			Entity e = items.get(i);
+			g.setColor(Color.black);
 			g.drawRect(((row * 128) + 128), ((col * 128) + 128), 96, 96);
+			Rectangle temp = new Rectangle((row * 128) + 128, ((col * 128) + 128), 96,96);
+			if(event != null && event.intersects(temp)) {
+				if(Logic.mousePressed) {
+					itemSelected = i;
+				}
+				g.setColor(new Color(255,0,0,100));
+				g.fillRect(((row * 128) + 128), ((col * 128) + 128), 96, 96);
+			}
 			e.anim.draw((row * 128) + 144, (col * 128) + 144, 64, 64);
 			row++;
 		}
@@ -104,9 +114,9 @@ public class GameEditorScreen {
 			g.setColor(Color.red);
 		}
 		
-		g.fillRect(linesBox.getX() + Camera.x, linesBox.getY() + Camera.y, 20, 20);
+		g.fillRect(linesBox.getX(), linesBox.getY(), 20, 20);
 		g.setFont(Resources.editorFont);
-		g.drawString("Draw Lines", linesBox.getX() + 30 + Camera.x, linesBox.getY() + Camera.y);
+		g.drawString("Draw Lines", linesBox.getX() + 30, linesBox.getY());
 
 	}
 	
@@ -119,9 +129,9 @@ public class GameEditorScreen {
 			g.setColor(Color.red);
 		}
 		
-		g.fillRect(hideDecBox.getX() + Camera.x, hideDecBox.getY() + Camera.y, 20, 20);
+		g.fillRect(hideDecBox.getX(), hideDecBox.getY(), 20, 20);
 		g.setFont(Resources.editorFont);
-		g.drawString("Hide Decorations", hideDecBox.getX() + 30 + Camera.x, hideDecBox.getY() + Camera.y);
+		g.drawString("Hide Decorations", hideDecBox.getX() + 30, hideDecBox.getY());
 
 	}
 	
@@ -136,7 +146,8 @@ public class GameEditorScreen {
 		}
 		else {
 			for(int i = 0; i < tileSet.getFrameCount(); i++) {
-				if(event != null && event.intersects(new Rectangle((Globals.width - 250) + i * 64, Globals.height/2, 64,64))) {
+				Rectangle temp = new Rectangle((Globals.width - 250) + (i * 64) + Camera.x, (Globals.height/2) + Camera.y, 64,64);
+				if(event != null && event.intersects(temp)) {
 					if(Logic.mousePressed) {
 						if(items.get(itemSelected) instanceof Floor) {
 							Floor f = (Floor) items.get(itemSelected);
@@ -146,10 +157,10 @@ public class GameEditorScreen {
 						}
 						
 					}
-					tileSet.getImage(i).draw((Globals.width - 250) + i * 64, Globals.height/2, new Color(255, 0, 0, 50));
+					tileSet.getImage(i).draw(temp.getX(), temp.getY(), new Color(255, 0, 0, 50));
 				}
 				else {
-					tileSet.getImage(i).draw((Globals.width - 250) + i * 64, Globals.height/2);
+					tileSet.getImage(i).draw(temp.getX(), temp.getY());
 				}
 			}
 		}
@@ -164,9 +175,9 @@ public class GameEditorScreen {
 			g.setColor(Color.red);
 		}
 		
-		g.fillRect(snapBox.getX() + Camera.x, snapBox.getY() + Camera.y, 20, 20);
+		g.fillRect(snapBox.getX(), snapBox.getY(), 20, 20);
 		g.setFont(Resources.editorFont);
-		g.drawString("Snap Objects", snapBox.getX() + 30 + Camera.x, snapBox.getY() + Camera.y);
+		g.drawString("Snap Objects", snapBox.getX() + 30, snapBox.getY());
 	}
 	
 	private static void drawItemGhost(Graphics g){

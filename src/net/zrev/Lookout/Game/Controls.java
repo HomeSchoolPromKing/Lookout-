@@ -9,18 +9,12 @@ import net.zrev.Lookout.GameEditor.GameEditor;
 public class Controls {
 
 	public static void keyPressed(int key, char c) {
-		if(key == 200) {
-			Camera.y -= 32;
+
+		if(key == 42) {
+			Logic.shiftHeld = true;
 		}
-		else if(key == 208) {
-			Camera.y += 32;
-		}
-		if(key == 203) {
-			Camera.x -= 32;
-		}
-		else if(key == 205) {
-			Camera.x += 32;
-		}
+		
+		
 		if(Character.isDigit(c)) {
 			if(Integer.parseInt(c+"") <= Game.currentLevel.inventory.size()) {
 				Game.itemSelected = Integer.parseInt(c+"")-1;
@@ -42,10 +36,14 @@ public class Controls {
 		}
 		if(state == IN_EDITOR) {
 			GameEditor.keyPressed(key, c);
+			
 		}
 	}
 
 	public static void keyReleased(int key, char c) {
+		if(key == 42) {
+			Logic.shiftHeld = false;
+		}
 	}
 
 	public static void mousePressed(int button, int x, int y) {

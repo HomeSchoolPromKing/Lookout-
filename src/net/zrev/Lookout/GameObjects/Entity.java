@@ -32,17 +32,17 @@ public abstract class Entity implements Cloneable {
 
 	public void draw(Graphics g){
 		if(DEBUG || anim == null) {
-			g.fill(getBoundingBox());
-			g.setColor(Color.green);
-			g.drawRect(x, y, width, height);
+			//g.fill(getBoundingBox());
+			//g.setColor(Color.green);
+			//g.drawRect(x, y, width, height);
 			g.setColor(Color.orange);
 			g.draw(rightCollision);
-			g.setColor(Color.blue);
-			g.draw(leftCollision);
-			g.setColor(Color.black);
+			//g.setColor(Color.blue);
+			//g.draw(leftCollision);
+			g.setColor(Color.red);
 			g.draw(belowCollision);
-			g.setColor(Color.magenta);
-			g.draw(aboveCollision);
+			//g.setColor(Color.magenta);
+			//g.draw(aboveCollision);
 		}
 		else {
 			if(Game.p.isHurt) {
@@ -99,9 +99,11 @@ public abstract class Entity implements Cloneable {
 		}
 		x += velocityX;
 		if(!onGround && isSolid) {
-			if(velocityY < maxFall) {
-				if(objectBelow == null)
+			if(Math.abs(velocityY) < maxFall) {
+				if(objectBelow == null || objectBelow.isSolid) {
 					velocityY += gravity;
+					System.out.println("falling");
+				}
 			}
 			if(velocityY < 0) {
 				if(objectAbove == null)
