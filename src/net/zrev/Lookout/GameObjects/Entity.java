@@ -101,12 +101,12 @@ public abstract class Entity implements Cloneable {
 				if(right.intersects(e.getBoundingBox())) {
 					velocityX = 0.0F;
 					//x = e.x - e.width;
-					handleAction(e, 1);
+					handleAction(e, DRIGHT);
 				}
 				if(left.intersects(e.getBoundingBox())) {
 					velocityX = 0.0F;
 					//x = e.x + e.width;
-					handleAction(e, 3);
+					handleAction(e, DLEFT);
 				}
 				if(e.collected) {
 					Game.currentLevel.toRemove = e;
@@ -143,29 +143,42 @@ public abstract class Entity implements Cloneable {
 	}
 	
 	public void handleAction(Entity e, int direction){
-		if(e.isSolid && this.controlable) {
-			if(direction == 1) {
-				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
-					if(movingRight) {
-						movingLeft = true;
-						movingRight = false;
-					}
+		//Is placeable, basically
+		if(e.passive) {
+			if(e instanceof SwitchDirections) {
+				switchDirection(((SwitchDirections) e).direction);
+				e.collected = true;
 			}
-			if(direction == 3) {
-				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
-					if(movingLeft) {
-						movingRight = true;
-						movingLeft = false;
-					}
+		}
+		if(e.isSolid && this.controlable) {
+			if(direction == DRIGHT) {
+				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump)) {
+					switchDirection(direction);
+				}
+			}
+			if(direction == DLEFT) {
+				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump)) {
+					switchDirection(direction);
+				}
+			}
+		}
+	}
+	
+	public void switchDirection(int direction){
+		if(direction == DLEFT) {
+			if(movingLeft) {
+				movingRight = true;
+				movingLeft = false;
+			}
+		}
+		else if(direction == DRIGHT) {
+			if(movingRight) {
+				movingLeft = true;
+				movingRight = false;
 			}
 		}
 	}
 
-	public Entity collision() {
-		Entity toReturn = null;
-
-		return toReturn;
-	}
 
 	public void jump() {
 		if(!jumping) {
@@ -197,6 +210,8 @@ public abstract class Entity implements Cloneable {
 
 
 	
+	
+	public int DLEFT = 3, DRIGHT = 1, DUP = 0, DDOWN= 2;
 	
 	public int id;
 	

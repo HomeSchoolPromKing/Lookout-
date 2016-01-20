@@ -170,11 +170,11 @@ public class Level {
 		case 3:
 			Animation switchDir = null;
 			int direction = Integer.parseInt(params[3]);
-			if(direction == 1) {
-				switchDir = new Animation(new SpriteSheet(new Image("switchDirLeft.png"), 96, 64), 150);
-			}
-			else if(direction == 2) {
+			if(direction == 3) {
 				switchDir = new Animation(new SpriteSheet(new Image("switchDirRight.png"), 96, 64), 150);
+			}
+			else if(direction == 1) {
+				switchDir = new Animation(new SpriteSheet(new Image("switchDirLeft.png"), 96, 64), 150);
 			}
 			return new SwitchDirections(id, switchDir, x, y, switchDir.getWidth(), switchDir.getHeight(), direction);
 		case 4:

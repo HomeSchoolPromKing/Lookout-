@@ -260,8 +260,6 @@ public class GameEditor {
 			}
 		}
 	}
-
-	
 	
 	public static Rectangle highlight = null;
 	public static Point startShift = null;
