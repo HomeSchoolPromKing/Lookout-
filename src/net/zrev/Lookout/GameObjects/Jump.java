@@ -6,12 +6,12 @@ public class Jump extends Entity {
 
 	public Jump(int id, Animation anim, float x, float y, float width, float height) {
 		super(id, anim, x, y, width, height);
-		onGround = true;
 		isSolid = false;
+		passive = true;
 	}
 	
 	public void update(int delta){
 		super.update(delta);
+		
 	}
-	
 }

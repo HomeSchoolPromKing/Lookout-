@@ -15,6 +15,7 @@ public class AfterImage extends Entity {
 		isSolid = true;
 		movingRight = true;
 		init();
+		passive = true;
 	}
 	
 	private void init(){
@@ -34,7 +35,7 @@ public class AfterImage extends Entity {
 	
 	
 	public void update(int delta){
-		if(!Game.p.onGround) {
+		if(!Game.p.jumping) {
 			if(Game.p.movingLeft) {
 				x = Game.p.x + 16;
 			}

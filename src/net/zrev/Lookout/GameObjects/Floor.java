@@ -28,7 +28,6 @@ public class Floor extends Entity {
 			e.printStackTrace();
 		}
 
-		onGround = true;
 		isSolid = true;
 	}
 

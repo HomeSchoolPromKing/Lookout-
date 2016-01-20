@@ -60,10 +60,10 @@ public class Game {
 	
 	public static int 
 			minOffsetX = -viewWidth,
-			maxOffsetX = gameWidth + viewWidth,
-			minOffsetY = -viewHeight, maxOffsetY = gameHeight + viewHeight,
+			maxOffsetX = gameWidth + viewWidth * 2,
+			minOffsetY = -viewHeight, maxOffsetY = gameHeight + viewHeight * 2,
 			currentOffsetX = 0, currentOffsetY = 0;
-	public static Level currentLevel = new Level(6);
+	public static Level currentLevel = new Level(1);
 
 	public static int itemSelected = 0;
 

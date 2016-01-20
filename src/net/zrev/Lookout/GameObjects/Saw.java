@@ -6,7 +6,6 @@ public class Saw extends Entity {
 
 	public Saw(int id, Animation anim, float x, float y, float width, float height) {
 		super(id, anim, x, y, width, height);
-		onGround = true;
 		isSolid = false;
 	}
 	
