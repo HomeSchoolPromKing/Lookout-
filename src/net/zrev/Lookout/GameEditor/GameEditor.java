@@ -101,8 +101,8 @@ public class GameEditor {
 		
 		if(Logic.rightMousePressed && Logic.shiftHeld) {
 			if(highlight != null) {
-				highlight.setWidth((nx / scaleX) - highlight.getX());
-				highlight.setHeight((ny / scaleY) - highlight.getY());
+				highlight.setWidth(((nx / scaleX) + Camera.x) - highlight.getX());
+				highlight.setHeight(((ny / scaleY) + Camera.y) - highlight.getY());
 			}
 		}
 	}
