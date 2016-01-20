@@ -2,6 +2,7 @@ package net.zrev.Lookout.GameObjects;
 
 import java.util.Random;
 
+import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
@@ -58,6 +59,12 @@ public class Player extends Entity {
 
 	public void handleAction(Entity e, int direction) {
 		super.handleAction(e, direction);
+
+		if(e instanceof Saw) {
+			Core.shakeAmt = Core.SHAKE_INTENSITY;
+			Core.shake();
+		}
+
 		if(e.isSolid) {
 			if(direction == 1) {
 				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
