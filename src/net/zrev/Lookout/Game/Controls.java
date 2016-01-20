@@ -56,6 +56,9 @@ public class Controls {
 				Logic.removeObject();
 			}
 		}
+		if(button == 1) {
+			Logic.rightMousePressed = true;
+		}
 		
 		if(state == IN_EDITOR) {
 			GameEditor.mousePressed(button, x, y);
@@ -98,5 +101,8 @@ public class Controls {
 
 	public static void mouseReleased(int button, int x, int y) {
 		Logic.mousePressed = false;
+		if(button == 1) {
+			Logic.rightMousePressed = true;
+		}
 	}
 }

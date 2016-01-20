@@ -98,6 +98,13 @@ public class GameEditor {
 				}
 			}
 		}
+		
+		if(Logic.rightMousePressed && Logic.shiftHeld) {
+			if(highlight != null) {
+				highlight.setWidth((nx / scaleX) - highlight.getX());
+				highlight.setHeight((ny / scaleY) - highlight.getY());
+			}
+		}
 	}
 
 	public static void mouseWheelMoved(int change) {
@@ -155,7 +162,6 @@ public class GameEditor {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-
 		}
 	}
 
@@ -184,7 +190,7 @@ public class GameEditor {
 			placeObject();
 		}
 		else {
-			if(Logic.shiftHeld) {
+			if(Logic.shiftHeld && button == 0) {
 				shiftPlace();
 			}
 		}
@@ -201,11 +207,18 @@ public class GameEditor {
 			drawLines = !drawLines;
 		}
 		if(button == 1) {
+			Entity ee = null;
 			for(Entity e : Game.currentLevel.gameObjects) {
-				if(event.intersects(e.getBoundingBox())) {
+				if(event.intersects(e.getBoundingBox()) || (highlight != null && highlight.intersects(e.getBoundingBox()))) {
 					e.isSelected = !e.isSelected;
+					ee = e;
 				}
 			}
+			if(ee == null) {
+				Logic.changeState();
+			}
+			if(highlight == null || Math.abs(highlight.getWidth()) > 0 )
+				highlight = new Rectangle(Globals.mouseX, Globals.mouseY, 1, 1);
 		}
 	}
 
@@ -248,6 +261,9 @@ public class GameEditor {
 		}
 	}
 
+	
+	
+	public static Rectangle highlight = null;
 	public static Point startShift = null;
 	public static Animation tileSet;
 	public static Rectangle event;

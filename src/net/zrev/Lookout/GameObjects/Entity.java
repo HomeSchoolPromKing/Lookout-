@@ -102,7 +102,6 @@ public abstract class Entity implements Cloneable {
 			if(Math.abs(velocityY) < maxFall) {
 				if(objectBelow == null || objectBelow.isSolid) {
 					velocityY += gravity;
-					System.out.println("falling");
 				}
 			}
 			if(velocityY < 0) {

@@ -68,6 +68,10 @@ public class GameEditorScreen {
 		drawLinesBox(g);
 		drawItemSelectArea(g);
 		drawTileSetOptions(g);
+		if(highlight != null) {
+			g.setColor(new Color(255,0,0,50));
+			g.fill(highlight);
+		}
 	}
 	
 	
