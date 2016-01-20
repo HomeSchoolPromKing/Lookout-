@@ -24,7 +24,7 @@ public class Player extends Entity {
 		initPlayerImages();
 		movingLeft = false;
 		movingRight = true;
-
+		controlable = true;
 		//ai = new AfterImage(-999, anim, x, y, width, height);
 	}
 
@@ -64,24 +64,10 @@ public class Player extends Entity {
 			Core.shakeAmt = Core.SHAKE_INTENSITY;
 			Core.shake();
 		}
-
-		if(e.isSolid) {
-			if(direction == 1) {
-				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
-					if(movingRight) {
-						movingLeft = true;
-						movingRight = false;
-					}
-			}
-			if(direction == 3) {
-				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
-					if(movingLeft) {
-						movingRight = true;
-						movingLeft = false;
-					}
-			}
+		if(e instanceof Enemy) {
+			Core.shakeAmt = Core.SHAKE_INTENSITY;
+			Core.shake();
 		}
-
 	}
 
 	private void checkIfDead(){

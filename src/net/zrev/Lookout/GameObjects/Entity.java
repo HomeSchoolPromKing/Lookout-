@@ -87,7 +87,7 @@ public abstract class Entity implements Cloneable {
 				if(bottom.intersects(e.getBoundingBox())) {
 					handleAction(e, 2);
 					velocityY = 0.0F;
-					if(this.y + this.height > e.y && this instanceof Player && falling && e instanceof Floor) {
+					if(this.y + this.height > e.y && this.controlable == true && falling && e instanceof Floor) {
 						this.y = e.y - this.height;
 					}
 					if(falling) falling = false;
@@ -143,7 +143,22 @@ public abstract class Entity implements Cloneable {
 	}
 	
 	public void handleAction(Entity e, int direction){
-		
+		if(e.isSolid && this.controlable) {
+			if(direction == 1) {
+				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
+					if(movingRight) {
+						movingLeft = true;
+						movingRight = false;
+					}
+			}
+			if(direction == 3) {
+				if(!bottom.intersects(e.getBoundingBox()) && !(e instanceof Jump))
+					if(movingLeft) {
+						movingRight = true;
+						movingLeft = false;
+					}
+			}
+		}
 	}
 
 	public Entity collision() {
@@ -207,6 +222,8 @@ public abstract class Entity implements Cloneable {
 	public boolean isHurt = false;
 	
 	public boolean collected = false;
+	
+	public boolean controlable = false;
 	
 	public Animation anim;
 	

@@ -12,6 +12,7 @@ import org.newdawn.slick.SpriteSheet;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Decorative.Decoration;
+import net.zrev.Lookout.GameObjects.Enemy;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
 import net.zrev.Lookout.GameObjects.Jump;
@@ -186,6 +187,10 @@ public class Level {
 		case 6:
 			Animation saw = new Animation(new SpriteSheet(new Image("saw.png"), 64, 64), 100);
 			return new Saw(id, saw, x, y, saw.getWidth(), saw.getHeight());
+		case 7:
+			Animation enemy = new Animation(new SpriteSheet(new Image("enemy.png"), 64, 64), 100);
+			return new Enemy(id, enemy, x, y, enemy.getWidth(), enemy.getHeight(), params);
+
 		}
 
 		if(DEBUG) {
