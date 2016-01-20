@@ -149,8 +149,14 @@ public class GameEditorScreen {
 			}
 		}
 		else {
+			int col = 0;
+			int row = 0;
 			for(int i = 0; i < tileSet.getFrameCount(); i++) {
-				Rectangle temp = new Rectangle((Globals.width - 250) + (i * 64) + Camera.x, (Globals.height/2) + Camera.y, 64,64);
+				if(i % 3 == 0 && i > 0) {
+					col++;
+					row = 0;
+				}
+				Rectangle temp = new Rectangle((Globals.width - 250) + (row * 64) + Camera.x, (Globals.height/2) + (col * 64) + Camera.y, 64,64);
 				if(event != null && event.intersects(temp)) {
 					if(Logic.mousePressed) {
 						if(items.get(itemSelected) instanceof Floor) {
@@ -166,6 +172,7 @@ public class GameEditorScreen {
 				else {
 					tileSet.getImage(i).draw(temp.getX(), temp.getY());
 				}
+				row++;
 			}
 		}
 		
