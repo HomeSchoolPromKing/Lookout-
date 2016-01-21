@@ -41,6 +41,12 @@ public class Decoration {
 		}
 		try {
 			temp = new Animation(new SpriteSheet(new Image(name), width, height), speed);
+			if(animationParams.length > 5) {
+				int pingpong = Integer.parseInt(animationParams[5]);
+				if(pingpong == 1) {
+					temp.setPingPong(true);
+				}
+			}
 			toReturn = new Decoration(temp, x, y);
 		}
 		catch(Exception e) {
@@ -75,7 +81,7 @@ public class Decoration {
 				int id = Integer.parseInt(params[0]);
 				float x = Float.parseFloat(params[1]);
 				float y = Float.parseFloat(params[2]);
-				Level.decorations.add(idToDecoration(id, x, y, params));
+				Level.backgroundDecorations.add(idToDecoration(id, x, y, params));
 			}
 			catch(Exception e) {
 				e.printStackTrace();

@@ -94,7 +94,7 @@ public class Level {
 	
 	public static void resetLevel(){
 		Game.currentLevel.gameObjects.clear();
-		Level.decorations.clear();
+		Level.backgroundDecorations.clear();
 		Game.currentLevel.inventory.clear();
 		Game.currentLevel.isCompleted = false;
 		Game.currentLevel.isFailed = false;
@@ -111,7 +111,7 @@ public class Level {
 
 	public static void goToLevel(int level){
 		Game.currentLevel.gameObjects.clear();
-		Level.decorations.clear();
+		Level.backgroundDecorations.clear();
 		Game.currentLevel.inventory.clear();
 		Game.currentLevel.isCompleted = false;
 		Game.currentLevel.startLoadingDecorations = false;
@@ -126,7 +126,7 @@ public class Level {
 
 	public static void nextLevel(){
 		Game.currentLevel.gameObjects.clear();
-		Level.decorations.clear();
+		Level.backgroundDecorations.clear();
 		Game.currentLevel.inventory.clear();
 		Game.currentLevel.isCompleted = false;
 		Game.currentLevel.startLoadingDecorations = false;
@@ -207,6 +207,7 @@ public class Level {
 	
 	public Entity toRemove = null;
 	public ArrayList<Entity> gameObjects = new ArrayList<Entity>();
-	public static ArrayList<Decoration> decorations = new ArrayList<Decoration>();
+	public static ArrayList<Decoration> backgroundDecorations = new ArrayList<Decoration>();
+	public static ArrayList<Decoration> foregroundDecorations = new ArrayList<Decoration>();
 	public ArrayList<Entity> inventory = new ArrayList<Entity>();
 }

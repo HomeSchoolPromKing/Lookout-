@@ -1,6 +1,7 @@
 package net.zrev.Lookout.GameObjects;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 
 public class Enemy extends Entity{
 
@@ -19,8 +20,17 @@ public class Enemy extends Entity{
 	
 	public void update(int delta){
 		super.update(delta);
+		
+		angle+=4;
 	}
 	
+	public void draw(Graphics g){
+		g.pushTransform();
+		g.rotate(getBoundingBox().getCenterX(), getBoundingBox().getCenterY(), angle);
+		g.drawAnimation(anim, x, y);
+		g.popTransform();
+	}
 	
+	public int angle = 0;
 	int enemyID = 0;
 }

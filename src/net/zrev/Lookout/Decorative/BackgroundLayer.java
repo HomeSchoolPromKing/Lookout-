@@ -43,15 +43,20 @@ public class BackgroundLayer {
 				bs.setY(bs.getY() - bs.speedY);
 				bs.update();
 			}
-			
-			for(Decoration a : Level.decorations) {
-				g.drawAnimation(a.a, a.x, a.y);
-			}
+			BackgroundLayer.drawBackgroundDecorations(g);
 		}
 		
 		update();
 	}
 
+	
+	public static void drawBackgroundDecorations(Graphics g) {
+		if(state == IN_GAME || (state == IN_EDITOR && !GameEditor.hideDecorations)) {
+			for(Decoration a : Level.backgroundDecorations) {
+				g.drawAnimation(a.a, a.x, a.y);
+			}
+		}
+	}
 
 	public static void loadBackgroundShapes(){
 		for(int i = 0; i < 20; i++) {
@@ -133,4 +138,5 @@ public class BackgroundLayer {
 	public static ArrayList<NorthernLights> theLights = new ArrayList<NorthernLights>();
 	public static ArrayList<BackgroundShape> backgroundShapes = new ArrayList<BackgroundShape>();
 	public static BackgroundShape toRemove = null;
+
 }

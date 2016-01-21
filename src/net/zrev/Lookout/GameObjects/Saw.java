@@ -10,7 +10,6 @@ public class Saw extends Entity {
 	}
 	
 	public void update(int delta){
-		super.update(delta);
 	}
 	
 }

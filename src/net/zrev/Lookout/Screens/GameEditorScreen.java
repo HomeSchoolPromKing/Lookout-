@@ -47,8 +47,10 @@ public class GameEditorScreen {
 		}
 		
 		drawItemGhost(g);
-		
+		BackgroundLayer.drawBackgroundDecorations(g);
 		drawLeftPanel(g);
+		
+		
 	}
 	
 	private static void drawLeftPanel(Graphics g){
