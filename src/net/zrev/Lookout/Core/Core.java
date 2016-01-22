@@ -75,6 +75,20 @@ public class Core extends BasicGame {
 	public void keyReleased(int key, char c) {
 		super.keyReleased(key, c);
 		Controls.keyReleased(key, c);
+		if(state == 2) {
+			if(key == 12) {
+				if(zoom == 1.0F)
+					zoom = 0.5F;
+				else
+					zoom = 1.0F;
+			}
+			if(key == 13) {
+				if(zoom == 1.0F)
+					zoom = 1.5F;
+				else
+					zoom = 1.0F;
+			}
+		}
 	}
 
 	public void mousePressed(int button, int x, int y) {
@@ -104,6 +118,8 @@ public class Core extends BasicGame {
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
+		scaleX = (Display.getWidth() / 1920F) * zoom;
+		scaleY =  ((Display.getHeight()) / 1080F) * zoom;
 		if(delta >= 30) {
 			Globals.delta = delta;
 		}
@@ -128,8 +144,8 @@ public class Core extends BasicGame {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		if(Display.getWidth() != gc.getWidth() || Display.getHeight() != gc.getHeight()) {
 			try {
-				scaleX = (float) Display.getWidth() / 1920;
-				scaleY = (float) (Display.getHeight()) / 1080;
+				scaleX = (Display.getWidth() / 1920F) * zoom;
+				scaleY =  ((Display.getHeight()) / 1080F) * zoom;
 				appgc.setDisplayMode(Display.getWidth(), Display.getHeight(), false);
 				Display.setResizable(true);
 			} 
@@ -137,8 +153,10 @@ public class Core extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-
-		g.scale((float) (Display.getWidth() ) / 1920, (float) (Display.getHeight()) / 1080);
+		
+		g.scale(((Display.getWidth() ) / 1920F) * zoom, ((Display.getHeight()) / 1080F) * zoom);
+		
+		
 		g.translate(-Camera.x, -Camera.y);
         if (shakeX!=0 && shakeY!=0)
             g.translate(shakeX, shakeY);
@@ -175,6 +193,8 @@ public class Core extends BasicGame {
 			shakeAmt = 0f;
 	}
 	
+	
+	public static float zoom = 1.0F;
     public static final boolean SHAKE_SNAP = false;
     
     /** How far the shake should extend in pixels. */

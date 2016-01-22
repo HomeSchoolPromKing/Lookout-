@@ -41,9 +41,9 @@ public class GameEditorScreen {
 		}
 		for(Entity e : Game.currentLevel.gameObjects) {
 			//If the entity is within the camera rectangle, draw it.
-			if(Camera.shouldRender(e.getBoundingBox())) {
+			//if(Camera.shouldRender(e.getBoundingBox())) {
 				e.draw(g);
-			}
+			//}
 		}
 		
 		drawItemGhost(g);

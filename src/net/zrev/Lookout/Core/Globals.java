@@ -18,8 +18,8 @@ public class Globals {
 			Camera.width = Globals.width;
 			Camera.height = Globals.height;
 		}
-		Globals.width = ( (float)  Display.getWidth()) / ((float) Display.getWidth() / 1920);
-		Globals.height = ( (float)  Display.getHeight()) / ((float) Display.getHeight() / 1080);
+		Globals.width = (Display.getWidth()) / ((Display.getWidth() / 1920F) * Core.zoom);
+		Globals.height = ( Display.getHeight()) / ((Display.getHeight() / 1080F) * Core.zoom);
 
 	}
 	
