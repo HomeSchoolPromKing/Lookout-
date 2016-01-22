@@ -12,12 +12,15 @@ import org.newdawn.slick.SpriteSheet;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Decorative.Decoration;
+import net.zrev.Lookout.GameObjects.Coin;
 import net.zrev.Lookout.GameObjects.Enemy;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Floor;
 import net.zrev.Lookout.GameObjects.Jump;
 import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.Saw;
+import net.zrev.Lookout.GameObjects.SpeedUp;
+import net.zrev.Lookout.GameObjects.Stop;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.WinZone;
 
@@ -190,7 +193,15 @@ public class Level {
 		case 7:
 			Animation enemy = new Animation(new SpriteSheet(new Image("enemy.png"), 64, 64), 100);
 			return new Enemy(id, enemy, x, y, enemy.getWidth(), enemy.getHeight(), params);
-
+		case 8:
+			Animation coin = new Animation(new SpriteSheet(new Image("coin.png"), 64, 64), 100);
+			return new Coin(id, coin, x, y, coin.getWidth(), coin.getHeight(), params);
+		case 9:
+			Animation speedUp = new Animation(new SpriteSheet(new Image("speedup.png"), 64, 64), 100);
+			return new SpeedUp(id, speedUp, x, y, speedUp.getWidth(), speedUp.getHeight(), params);
+		case 10:
+			Animation stop = new Animation(new SpriteSheet(new Image("stop.png"), 64, 64), 100);
+			return new Stop(id, stop, x, y, stop.getWidth(), stop.getHeight(), params);
 		}
 
 		if(DEBUG) {
@@ -204,6 +215,7 @@ public class Level {
 	public boolean isCompleted = false;
 	
 	public int levelId = 0;
+	public int levelScore = 0;
 	
 	public Entity toRemove = null;
 	public ArrayList<Entity> gameObjects = new ArrayList<Entity>();

@@ -9,6 +9,7 @@ public class SwitchDirections extends Entity {
 		isSolid = false;
 		this.direction = direction;
 		passive = true;
+		collectable = true;
 	}
 	
 	public void update(int delta){

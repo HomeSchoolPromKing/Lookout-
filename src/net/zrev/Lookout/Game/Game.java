@@ -66,5 +66,4 @@ public class Game {
 	public static Level currentLevel = new Level(1);
 
 	public static int itemSelected = 0;
-
 }

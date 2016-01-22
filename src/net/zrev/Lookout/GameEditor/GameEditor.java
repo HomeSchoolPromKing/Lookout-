@@ -18,6 +18,7 @@ import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.Game.Level;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.GameObjects.Jump;
+import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.Screens.GameEditorScreen;
 import static net.zrev.Lookout.Core.Globals.*;
 import static net.zrev.Lookout.GameEditor.GameEditor.snapBox;
@@ -47,7 +48,7 @@ public class GameEditor {
 		if(key == 211) {
 			ArrayList<Entity> removeThese = new ArrayList<Entity>();
 			for(Entity e : Game.currentLevel.gameObjects) {
-				if(e.isSelected)
+				if(e.isSelected && !(e instanceof Player))
 					removeThese.add(e); 
 			}
 			for(Entity e : removeThese) {

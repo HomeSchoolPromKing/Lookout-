@@ -85,7 +85,7 @@ public abstract class Entity implements Cloneable {
 					handleAction(e, 0);
 				}
 				if(bottom.intersects(e.getBoundingBox())) {
-					handleAction(e, 2);
+					handleAction(e, DDOWN);
 					velocityY = 0.0F;
 					if(this.y + this.height > e.y && this.controlable == true && falling && e instanceof Floor) {
 						this.y = e.y - this.height;
@@ -116,25 +116,31 @@ public abstract class Entity implements Cloneable {
 		
 		if(!passive) {
 			if(movingRight && !movingLeft) {
-				velocityX = 8.0F;
+				if (spedUp) {
+					velocityX = 12F;
+				}
+				else if (stopped) {
+					velocityX = 0F;
+				}
+				else {
+					velocityX = 8.0F;
+				}
 			}
 			if(movingLeft && !movingRight) {
-				velocityX = -8.0F;
+				if (spedUp) {
+					velocityX = -12F;
+				}
+				else if (stopped) {
+					velocityX = -0F;
+				}
+				else {
+					velocityX = -8.0F;
+				}
 			}
 		}
-		
-		if(jumping) {
-			gravity -= 0.5F;
-			velocityY = (int) -gravity;
-			if(gravity < 1.0F) {
-				jumping = false; 
-				falling = true;
-			}
-		}
-		if(falling) {
-			gravity += 0.5F;
-			velocityY = (int) gravity;
-		}
+		updateSpeedUp();
+		updateJump();
+		updateStopped();
 		
 		if(!passive) {
 			x += velocityX;
@@ -147,6 +153,24 @@ public abstract class Entity implements Cloneable {
 		if(e.passive) {
 			if(e instanceof SwitchDirections) {
 				switchDirection(((SwitchDirections) e).direction);
+			}
+			else if (e instanceof Coin) {
+				if (e.collected == false && this instanceof Player){
+					Game.currentLevel.levelScore += 100;
+				}
+			}
+			else if (e instanceof SpeedUp) {
+				if (e.collected == false && this.controlable){
+					this.spedUp = true;
+					this.stopped = false;
+				}
+			}
+			else if (e instanceof Stop) {
+				if(e.collected == false &&this.controlable) {
+					this.stopped = true;
+				}
+			}
+			if(e.collectable) {
 				e.collected = true;
 			}
 		}
@@ -179,7 +203,45 @@ public abstract class Entity implements Cloneable {
 		}
 	}
 
-
+	public void updateSpeedUp(){
+		if(spedUp) {
+			if(currentSpeedUpTimer < maximumSpeedUpTimer) {
+				currentSpeedUpTimer++;
+			}
+			else if(currentSpeedUpTimer >= maximumSpeedUpTimer) {
+				spedUp = false;
+				currentSpeedUpTimer = 0;
+			}
+		}
+	}
+	
+	public void updateStopped(){
+		if(stopped) {
+			if(currentStoppedTimer < maximumStoppedTimer) {
+				currentStoppedTimer++;
+			}
+			else if(currentStoppedTimer >= maximumStoppedTimer) {
+				stopped = false;
+				currentStoppedTimer = 0;
+			}
+		}
+	}
+	
+	public void updateJump(){
+		if(jumping) {
+			gravity -= 0.5F;
+			velocityY = (int) -gravity;
+			if(gravity < 1.0F) {
+				jumping = false; 
+				falling = true;
+			}
+		}
+		if(falling) {
+			gravity += 0.5F;
+			velocityY = (int) gravity;
+		}
+	}
+	
 	public void jump() {
 		if(!jumping) {
 			y-= 10;
@@ -239,6 +301,16 @@ public abstract class Entity implements Cloneable {
 	public boolean collected = false;
 	
 	public boolean controlable = false;
+	
+	public boolean collectable = false;
+	
+	public boolean spedUp = false;
+	
+	public boolean stopped = false;
+	
+	public int currentSpeedUpTimer = 0, maximumSpeedUpTimer = 100;
+	
+	public int currentStoppedTimer = 0, maximumStoppedTimer = 100;
 	
 	public Animation anim;
 	

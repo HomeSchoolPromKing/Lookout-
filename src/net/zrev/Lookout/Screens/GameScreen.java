@@ -28,6 +28,7 @@ public class GameScreen {
 	public static void draw(Graphics g){
 		BackgroundLayer.draw(g);
 		
+		
 		for(Entity e : Game.currentLevel.gameObjects) {
 			e.update(Globals.delta);
 			
@@ -41,5 +42,9 @@ public class GameScreen {
 			Game.currentLevel.gameObjects.remove(Game.currentLevel.toRemove);
 		
 		g.drawAnimation(Game.currentLevel.inventory.get(Game.itemSelected).anim, Globals.mouseX, Globals.mouseY);
+		//Down here
+		g.setFont(Resources.gameFont);
+		g.setColor(Color.white);
+		g.drawString("Current Score: " + Game.currentLevel.levelScore, Camera.x + 50 , Camera.y + 50);
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import net.zrev.Lookout.Decorative.BackgroundLayer;
 import net.zrev.Lookout.Decorative.NorthernLights;
@@ -25,6 +27,14 @@ public class Core extends BasicGame {
 
 	public Core(String gamename) {
 		super(gamename);
+//		Timer t = new Timer();
+//		t.scheduleAtFixedRate(new TimerTask() {
+//			public void run(){
+//				System.out.println("hi");
+//			}
+//		}
+//			, 100, 1000);
+		
 	}
 
 	@Override
