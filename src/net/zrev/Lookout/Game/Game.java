@@ -28,6 +28,7 @@ import net.zrev.Lookout.GameObjects.Jump;
 import net.zrev.Lookout.GameObjects.Player;
 import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
+import net.zrev.Lookout.GameObjects.Trigger;
 import net.zrev.Lookout.GameObjects.WinZone;
 import net.zrev.Lookout.Screens.GameScreen;
 
@@ -41,6 +42,15 @@ public class Game {
 			}
 		}
 		BackgroundLayer.reset();
+		initTriggers();
+	}
+	
+	public static void initTriggers(){
+		for(Entity e : currentLevel.gameObjects) {
+			if(e instanceof Trigger) {
+				((Trigger) e).init();
+			}
+		}
 	}
 	
 	public static void logic(){

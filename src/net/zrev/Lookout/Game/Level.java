@@ -22,6 +22,7 @@ import net.zrev.Lookout.GameObjects.Saw;
 import net.zrev.Lookout.GameObjects.SpeedUp;
 import net.zrev.Lookout.GameObjects.Stop;
 import net.zrev.Lookout.GameObjects.SwitchDirections;
+import net.zrev.Lookout.GameObjects.Trigger;
 import net.zrev.Lookout.GameObjects.WinZone;
 
 public class Level {
@@ -150,6 +151,7 @@ public class Level {
 			Entity e = idToEntity(id, x, y, params);
 			if(e != null) {
 				if(!fillingInventory) {
+					e.oid = gameObjects.size();
 					gameObjects.add(e);
 				}
 				else {
@@ -202,6 +204,10 @@ public class Level {
 		case 10:
 			Animation stop = new Animation(new SpriteSheet(new Image("stop.png"), 64, 64), 100);
 			return new Stop(id, stop, x, y, stop.getWidth(), stop.getHeight(), params);
+		case 99:
+			Animation trigger = new Animation(new SpriteSheet(new Image("trigger.png"), 64, 64), 100);
+			return new Trigger(id, trigger, x, y, trigger.getWidth(), trigger.getHeight(), params);
+
 		}
 
 		if(DEBUG) {

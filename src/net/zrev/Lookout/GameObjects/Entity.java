@@ -1,6 +1,9 @@
 package net.zrev.Lookout.GameObjects;
 
+import java.nio.ByteBuffer;
+import java.util.Base64;
 import java.util.Random;
+import java.util.UUID;
 
 import net.zrev.Lookout.Game.Game;
 
@@ -16,7 +19,6 @@ public abstract class Entity implements Cloneable {
 
 	public Entity(int id, Animation anim, float x, float y, float width, float height){
 		boundingBox = new Rectangle(x, y, width, height);
-		
 		left = new Rectangle(x, y + 10, 5, - 20);
 		right = new Rectangle(x + width - 5, y + 10, 5, height - 20);
 		top = new Rectangle(x + 10, y, width - 20, 5);
@@ -75,6 +77,7 @@ public abstract class Entity implements Cloneable {
 					jump();
 					e.collected = true;
 				}
+				
 				if(top.intersects(e.getBoundingBox()) && e.isSolid && !e.passive) {
 					velocityY = 0.0F;
 					if(jumping) {
@@ -98,6 +101,8 @@ public abstract class Entity implements Cloneable {
 						falling = true;
 					}
 				}
+				
+				
 				if(right.intersects(e.getBoundingBox())) {
 					velocityX = 0.0F;
 					//x = e.x - e.width;
@@ -110,6 +115,14 @@ public abstract class Entity implements Cloneable {
 				}
 				if(e.collected) {
 					Game.currentLevel.toRemove = e;
+				}
+				
+				if(e instanceof Trigger) {
+					if(getBoundingBox().intersects(e.getBoundingBox())) {
+						if(controlable) {
+							((Trigger) e).hitting = e;
+						}
+					}
 				}
 			}
 		}
@@ -270,12 +283,26 @@ public abstract class Entity implements Cloneable {
 		return id + "\t" + x + "\t" + y + "\t";
 	}
 
+	public static String generateShortUuid() {
+        UUID uuid = UUID.randomUUID();
 
+        long lsb = uuid.getLeastSignificantBits();
+        long msb = uuid.getMostSignificantBits();
+
+        byte[] uuidBytes = ByteBuffer.allocate(16).putLong(msb).putLong(lsb).array();
+        
+        return Base64.getEncoder().encode(uuidBytes).toString()
+                    .substring(0, 22)
+                    .replace("/", "_")
+                    .replace("+", "-");
+    }
 	
 	
 	public int DLEFT = 3, DRIGHT = 1, DUP = 0, DDOWN= 2;
 	
 	public int id;
+	
+	public int oid;
 	
 	public boolean passive = false;
 	

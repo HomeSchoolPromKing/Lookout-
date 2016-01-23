@@ -15,7 +15,9 @@ public class Enemy extends Entity{
 		else{
 			enemyID = 0;
 		}
-		movingRight = true;
+		if(enemyID == 0) {
+			movingRight = true;
+		}
 	}
 	
 	public void update(int delta){

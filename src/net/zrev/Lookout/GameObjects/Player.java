@@ -60,6 +60,10 @@ public class Player extends Entity {
 	public void handleAction(Entity e, int direction) {
 		super.handleAction(e, direction);
 
+		if(e instanceof WinZone) {
+			Game.currentLevel.isCompleted =  true;
+		}
+		
 		if(e instanceof Saw) {
 			Core.shakeAmt = Core.SHAKE_INTENSITY;
 			Core.shake();
@@ -67,6 +71,12 @@ public class Player extends Entity {
 		if(e instanceof Enemy) {
 			Core.shakeAmt = Core.SHAKE_INTENSITY;
 			Core.shake();
+		}
+		if(e instanceof Floor) {
+			//Is breakable
+			if(((Floor) e).tileId == 3 && (this.spedUp || Math.abs(this.velocityY)  > 4.0F)) {
+				Game.currentLevel.toRemove = e;
+			}
 		}
 	}
 

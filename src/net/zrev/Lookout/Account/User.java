@@ -7,7 +7,6 @@ import net.zrev.Lookout.GameObjects.Entity;
 public class User {
 
 	
-	
 	public int lastLevelCompleteled = 0;
 	public String username, password;
 }

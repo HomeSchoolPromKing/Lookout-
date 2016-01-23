@@ -212,6 +212,7 @@ public class GameEditor {
 			for(Entity e : Game.currentLevel.gameObjects) {
 				if(event.intersects(e.getBoundingBox()) || (highlight != null && highlight.intersects(e.getBoundingBox()))) {
 					e.isSelected = !e.isSelected;
+					System.out.println(e.oid);
 					ee = e;
 				}
 			}
