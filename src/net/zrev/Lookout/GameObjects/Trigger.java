@@ -35,18 +35,22 @@ public class Trigger extends Entity {
 	public void update(int delta){
 		super.update(delta);
 		if(hitting == null) {
-			isActive = false;
-			activated = false;
-			undo = true;
+			if(isActive) {
+				undo = true;
+				isActive = false;
+				activated = true;
+			}
 		}
 		else {
 			isActive = true;
-			undo = false;
 		}
 		hitting = null;
 
-		if(triggerType == 1 && (isActive || undo) && !activated) {
+		if(triggerType == 1 && (isActive || undo)) {
 			showHideObjects();
+		}
+		else if(triggerType == 2 && (isActive || undo)) {
+			raiseLower();
 		}
 	}
 
@@ -69,15 +73,33 @@ public class Trigger extends Entity {
 			for(Entity e : linkedEntities) {
 				e.isSelected = true;
 			}
-			activated = true;
 		}
 	}
-	
+
+	public void raiseLower(){
+		if(undo) {
+			for(Entity e : linkedEntities) {
+				e.y += 128;
+				e.updateBounds();
+			}
+			undo = false;
+		}
+		else if(!undo && isActive && activated) {
+			for(Entity e : linkedEntities) {
+				e.y -= 128;
+				e.updateBounds();
+			}
+			isActive = false;
+			undo = false;
+			activated = false;
+		}
+	}
+
 	private String[] params = null;
 	public int triggerType = 0;
 	public Entity hitting = null;
 	public boolean isActive = false;
-	public boolean activated = false;
+	public boolean activated = true;
 	public boolean undo = false;
 	public ArrayList<Entity> linkedEntities = new ArrayList<Entity>();
 	//public ArrayList<Integer> linkedIDs = new ArrayList<Integer>();
