@@ -73,7 +73,7 @@ public class Game {
 			maxOffsetX = gameWidth + viewWidth * 2,
 			minOffsetY = -viewHeight, maxOffsetY = gameHeight + viewHeight * 2,
 			currentOffsetX = 0, currentOffsetY = 0;
-	public static Level currentLevel = new Level(1);
+	public static Level currentLevel = new Level(8);
 
 	public static int itemSelected = 0;
 }

@@ -52,6 +52,9 @@ public class Trigger extends Entity {
 		else if(triggerType == 2 && (isActive || undo)) {
 			raiseLower();
 		}
+		else if(triggerType == 3 && (isActive) && !undo) {
+			raiseOnce();
+		}
 	}
 
 	public void draw(Graphics g){
@@ -94,6 +97,15 @@ public class Trigger extends Entity {
 			activated = false;
 		}
 	}
+
+	public void raiseOnce(){
+		for(Entity e : linkedEntities) {
+			e.y -= 128;
+			e.updateBounds();
+		}
+		undo = true;
+	}
+
 
 	private String[] params = null;
 	public int triggerType = 0;
