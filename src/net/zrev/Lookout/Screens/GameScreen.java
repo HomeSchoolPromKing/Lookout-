@@ -26,6 +26,8 @@ import org.newdawn.slick.geom.Rectangle;
 public class GameScreen {
 
 	public static void draw(Graphics g){
+		
+		
 		BackgroundLayer.draw(g);
 		
 		

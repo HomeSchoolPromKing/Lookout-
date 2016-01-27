@@ -13,5 +13,8 @@ public class Screen {
 		else if(state == IN_EDITOR) {
 			GameEditorScreen.draw(g);
 		}
+		else if(state == IN_END_LEVEL) {
+			
+		}
 	}
 }

@@ -1,17 +1,11 @@
 package net.zrev.Lookout.GameObjects;
 
-import java.nio.ByteBuffer;
-import java.util.Base64;
-import java.util.Random;
-import java.util.UUID;
-
 import net.zrev.Lookout.Game.Game;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
 
 import static net.zrev.Lookout.Core.Globals.*;
 
@@ -23,7 +17,7 @@ public abstract class Entity implements Cloneable {
 		right = new Rectangle(x + width - 5, y + 10, 5, height - 20);
 		top = new Rectangle(x + 10, y, width - 20, 5);
 		bottom = new Rectangle(x + 10, y + height - 5, width - 20, 5);
-		
+
 		this.anim = anim;
 		this.id = id;
 		this.x = x;
@@ -77,7 +71,7 @@ public abstract class Entity implements Cloneable {
 					jump();
 					e.collected = true;
 				}
-				
+
 				if(top.intersects(e.getBoundingBox()) && e.isSolid && !e.passive) {
 					velocityY = 0.0F;
 					if(jumping) {
@@ -101,8 +95,8 @@ public abstract class Entity implements Cloneable {
 						falling = true;
 					}
 				}
-				
-				
+
+
 				if(right.intersects(e.getBoundingBox())) {
 					velocityX = 0.0F;
 					//x = e.x - e.width;
@@ -116,7 +110,7 @@ public abstract class Entity implements Cloneable {
 				if(e.collected) {
 					Game.currentLevel.toRemove = e;
 				}
-				
+
 				if(e instanceof Trigger) {
 					if(getBoundingBox().intersects(e.getBoundingBox())) {
 						if(controlable) {
@@ -126,7 +120,7 @@ public abstract class Entity implements Cloneable {
 				}
 			}
 		}
-		
+
 		if(!passive) {
 			if(movingRight && !movingLeft) {
 				if (spedUp) {
@@ -136,7 +130,7 @@ public abstract class Entity implements Cloneable {
 					velocityX = 0F;
 				}
 				else {
-					velocityX = 8.0F;
+					velocityX = 6.0F;
 				}
 			}
 			if(movingLeft && !movingRight) {
@@ -147,25 +141,25 @@ public abstract class Entity implements Cloneable {
 					velocityX = -0F;
 				}
 				else {
-					velocityX = -8.0F;
+					velocityX = -6.0F;
 				}
 			}
 		}
 		updateSpeedUp();
 		updateJump();
 		updateStopped();
-		
+
 		if(!passive) {
 			x += velocityX;
 			y += velocityY;
 		}
 	}
-	
+
 	public void handleAction(Entity e, int direction){
 		//Is placeable, basically
 		if(e.passive) {
 			if(e instanceof SwitchDirections) {
-				switchDirection(((SwitchDirections) e).direction);
+				switchDirection(-1);
 			}
 			else if (e instanceof Coin) {
 				if (e.collected == false && this instanceof Player){
@@ -200,18 +194,30 @@ public abstract class Entity implements Cloneable {
 			}
 		}
 	}
-	
+
 	public void switchDirection(int direction){
-		if(direction == DLEFT) {
+		if(direction == -1) {
 			if(movingLeft) {
 				movingRight = true;
 				movingLeft = false;
 			}
-		}
-		else if(direction == DRIGHT) {
-			if(movingRight) {
+			else if(movingRight) {
 				movingLeft = true;
 				movingRight = false;
+			}
+		}
+		else {
+			if(direction == DLEFT) {
+				if(movingLeft) {
+					movingRight = true;
+					movingLeft = false;
+				}
+			}
+			else if(direction == DRIGHT) {
+				if(movingRight) {
+					movingLeft = true;
+					movingRight = false;
+				}
 			}
 		}
 	}
@@ -227,7 +233,7 @@ public abstract class Entity implements Cloneable {
 			}
 		}
 	}
-	
+
 	public void updateStopped(){
 		if(stopped) {
 			if(currentStoppedTimer < maximumStoppedTimer) {
@@ -239,7 +245,7 @@ public abstract class Entity implements Cloneable {
 			}
 		}
 	}
-	
+
 	public void updateJump(){
 		if(jumping) {
 			gravity -= 0.5F;
@@ -254,7 +260,7 @@ public abstract class Entity implements Cloneable {
 			velocityY = (int) gravity;
 		}
 	}
-	
+
 	public void jump() {
 		if(!jumping) {
 			y-= 10;
@@ -283,65 +289,50 @@ public abstract class Entity implements Cloneable {
 		return id + "\t" + x + "\t" + y + "\t";
 	}
 
-	public static String generateShortUuid() {
-        UUID uuid = UUID.randomUUID();
-
-        long lsb = uuid.getLeastSignificantBits();
-        long msb = uuid.getMostSignificantBits();
-
-        byte[] uuidBytes = ByteBuffer.allocate(16).putLong(msb).putLong(lsb).array();
-        
-        return Base64.getEncoder().encode(uuidBytes).toString()
-                    .substring(0, 22)
-                    .replace("/", "_")
-                    .replace("+", "-");
-    }
-	
-	
 	public int DLEFT = 3, DRIGHT = 1, DUP = 0, DDOWN= 2;
-	
+
 	public int id;
-	
+
 	public int oid;
-	
+
 	public boolean passive = false;
-	
+
 	public boolean wasPlaced = false;
-	
+
 	public boolean isSelected = false;
-	
+
 	public boolean movingRight = false, movingLeft = false;
-	
+
 	public Entity collision = null;
-	
+
 	public float velocityX = 0;
 	public float velocityY = 0.0F;
-	
+
 	public float gravity = 0.0f; 
-	
+
 	public boolean falling = false, jumping = false;
-	
+
 	public boolean isSolid = false;
-	
+
 	public boolean isHurt = false;
-	
+
 	public boolean collected = false;
-	
+
 	public boolean controlable = false;
-	
+
 	public boolean collectable = false;
-	
+
 	public boolean spedUp = false;
-	
+
 	public boolean stopped = false;
-	
+
 	public int currentSpeedUpTimer = 0, maximumSpeedUpTimer = 100;
-	
+
 	public int currentStoppedTimer = 0, maximumStoppedTimer = 100;
-	
+
 	public Animation anim;
-	
+
 	public float x, y, width, height;
-	
+
 	public Rectangle boundingBox, left, right, top, bottom;
 }

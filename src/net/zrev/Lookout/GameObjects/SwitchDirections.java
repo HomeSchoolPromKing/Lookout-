@@ -4,10 +4,9 @@ import org.newdawn.slick.Animation;
 
 public class SwitchDirections extends Entity {
 
-	public SwitchDirections(int id, Animation anim, float x, float y, float width, float height, int direction) {
+	public SwitchDirections(int id, Animation anim, float x, float y, float width, float height) {
 		super(id, anim, x, y, width, height);
 		isSolid = false;
-		this.direction = direction;
 		passive = true;
 		collectable = true;
 	}
@@ -17,9 +16,7 @@ public class SwitchDirections extends Entity {
 	}
 	
 	public String save(){
-		return id + "\t" + x + "\t" + y + "\t" + direction;
+		return id + "\t" + x + "\t" + y;
 	}
-	
-	public int direction;
 	
 }

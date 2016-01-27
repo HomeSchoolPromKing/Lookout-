@@ -31,6 +31,7 @@ import net.zrev.Lookout.GameObjects.SwitchDirections;
 import net.zrev.Lookout.GameObjects.Trigger;
 import net.zrev.Lookout.GameObjects.WinZone;
 import net.zrev.Lookout.Screens.GameScreen;
+import static net.zrev.Lookout.Core.Globals.*;
 
 public class Game {
 	
@@ -55,6 +56,7 @@ public class Game {
 	
 	public static void logic(){
 		if(currentLevel.isCompleted) {
+			state = IN_END_LEVEL;
 			Level.nextLevel();
 		}
 		else if(currentLevel.isFailed) {
@@ -73,7 +75,7 @@ public class Game {
 			maxOffsetX = gameWidth + viewWidth * 2,
 			minOffsetY = -viewHeight, maxOffsetY = gameHeight + viewHeight * 2,
 			currentOffsetX = 0, currentOffsetY = 0;
-	public static Level currentLevel = new Level(8);
+	public static Level currentLevel = new Level(1);
 
 	public static int itemSelected = 0;
 }

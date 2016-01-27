@@ -126,7 +126,7 @@ public class Core extends BasicGame {
 		scaling();
 		Camera.update();
 		input = gc.getInput();
-		if(state == 1) {
+		if(state == Globals.IN_GAME) {
 			Globals.mouseX += Game.p.velocityX;
 			Globals.mouseY += Game.p.velocityY;
 		}

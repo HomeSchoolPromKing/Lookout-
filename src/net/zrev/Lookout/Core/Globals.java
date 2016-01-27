@@ -43,6 +43,7 @@ public class Globals {
 	public static int state = 1;
 	public static final int IN_GAME = 1;
 	public static final  int IN_EDITOR = 2;
+	public static final int IN_END_LEVEL = 3;
 	
 	public static boolean DEBUG = false;
 }
