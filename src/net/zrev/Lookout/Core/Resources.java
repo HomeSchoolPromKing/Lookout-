@@ -33,6 +33,8 @@ public class Resources {
 		try {
 			bg = new Image("bg3.png");
 			bg55 = new Image("bg55.png");
+			itemSelection = new Image("itemselection.png");
+			itemSelectionSelected = new Image("itemselectionselected.png");
 			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(36f); // set font size
@@ -53,6 +55,6 @@ public class Resources {
 	}
 	
 	public static TrueTypeFont gameFont, editorFont;
-	public static Image bg, bg55;
+	public static Image bg, bg55, itemSelection, itemSelectionSelected;
 	public static boolean initated = false;
 }
