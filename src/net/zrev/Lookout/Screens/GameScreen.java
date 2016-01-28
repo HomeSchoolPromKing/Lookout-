@@ -8,6 +8,7 @@ import java.util.Random;
 import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
+import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
 import net.zrev.Lookout.Decorative.BackgroundShape;
 import net.zrev.Lookout.Game.Camera;
@@ -25,7 +26,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 
-public class GameScreen {
+public class GameScreen extends Screen {
 
 	public static void draw(Graphics g){
 

@@ -4,16 +4,16 @@ import static net.zrev.Lookout.Core.Globals.*;
 import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Logic;
+import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.GameEditor.GameEditor;
 
 public class Controls {
 
 	public static void keyPressed(int key, char c) {
-
+		Screen.keyPressed(key, c);
 		if(key == 42) {
 			Logic.shiftHeld = true;
 		}
-		
 		
 		if(Character.isDigit(c)) {
 			if(Integer.parseInt(c+"") <= Game.currentLevel.inventory.size()) {
@@ -33,10 +33,6 @@ public class Controls {
 				Logic.changeState();
 				state = IN_GAME;
 			}
-		}
-		if(state == IN_EDITOR) {
-			GameEditor.keyPressed(key, c);
-			
 		}
 	}
 
@@ -91,9 +87,10 @@ public class Controls {
 	public static void mouseMoved(int ox, int oy, int nx, int ny) {
 		float tempX = (float) Core.input.getMouseX() / scaleX;
 		float tempY = (float) Core.input.getMouseY() / scaleY;
-		Globals.mouseX = (int) tempX + Camera.x + Game.p.velocityX;
-		Globals.mouseY = (int) tempY + Game.p.velocityY + Camera.y;
-
+		if(state == IN_GAME) {
+			Globals.mouseX = (int) tempX + Camera.x - Game.p.velocityX;
+			Globals.mouseY = (int) tempY - Game.p.velocityY + Camera.y;
+		}
 		if(state == IN_EDITOR) {
 			GameEditor.mouseMoved(ox, oy, nx,ny);
 		}

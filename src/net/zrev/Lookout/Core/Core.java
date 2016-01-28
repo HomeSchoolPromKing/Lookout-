@@ -59,7 +59,8 @@ public class Core extends BasicGame {
 		}
 		try {
 			Resources.init();
-			Game.startGame();
+			state = HOME_MENU;
+			//Game.startGame();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +76,7 @@ public class Core extends BasicGame {
 	public void keyReleased(int key, char c) {
 		super.keyReleased(key, c);
 		Controls.keyReleased(key, c);
-		if(state == 2) {
+		if(state == IN_EDITOR) {
 			if(key == 12) {
 				if(zoom == 1.0F)
 					zoom = 0.5F;
@@ -120,25 +121,22 @@ public class Core extends BasicGame {
 	public void update(GameContainer gc, int delta) throws SlickException {
 		scaleX = (Display.getWidth() / 1920F) * zoom;
 		scaleY =  ((Display.getHeight()) / 1080F) * zoom;
-		if(delta >= 30) {
-			Globals.delta = delta;
-		}
 		scaling();
-		Camera.update();
 		input = gc.getInput();
-		if(state == Globals.IN_GAME) {
+		
+		if(state == IN_GAME || state == IN_EDITOR) {
+			Camera.update();
 			Globals.mouseX += Game.p.velocityX;
 			Globals.mouseY += Game.p.velocityY;
+			Logic.logic();
+	        if (shakeAmt>0f) {
+	            shakeTime -= delta;
+	            //new shakeX/Y
+	            if (shakeTime <= 0) {
+	                shake();
+	            }
+	        }	
 		}
-		Logic.logic();
-		
-        if (shakeAmt>0f) {
-            shakeTime -= delta;
-            //new shakeX/Y
-            if (shakeTime <= 0) {
-                shake();
-            }
-        }	
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {

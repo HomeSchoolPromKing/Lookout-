@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 
 import net.zrev.Lookout.Account.UserPreferences;
 import net.zrev.Lookout.Game.Camera;
+import net.zrev.Lookout.Screens.GameEditorScreen;
+import net.zrev.Lookout.Screens.GameScreen;
+import net.zrev.Lookout.Screens.StartMenuScreen;
 
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -21,6 +24,10 @@ public class Globals {
 		Globals.width = (Display.getWidth()) / ((Display.getWidth() / 1920F) * Core.zoom);
 		Globals.height = ( Display.getHeight()) / ((Display.getHeight() / 1080F) * Core.zoom);
 
+	}
+	
+	public static void setGameState(Screen newState){
+		state = newState;
 	}
 	
 	public static void hideCursor(){
@@ -40,10 +47,15 @@ public class Globals {
 	public static float width = 1920;
 	public static float height = 1080;
 
-	public static int state = 1;
-	public static final int IN_GAME = 1;
-	public static final  int IN_EDITOR = 2;
+	
+	public static final Screen IN_GAME = new GameScreen();
+	public static final  Screen IN_EDITOR = new GameEditorScreen();
+	
 	public static final int IN_END_LEVEL = 3;
+	
+	public static final Screen HOME_MENU = new StartMenuScreen();
+	
+	public static Screen state = HOME_MENU;
 	
 	public static boolean DEBUG = false;
 }

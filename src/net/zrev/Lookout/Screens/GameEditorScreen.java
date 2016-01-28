@@ -3,6 +3,7 @@ package net.zrev.Lookout.Screens;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Logic;
 import net.zrev.Lookout.Core.Resources;
+import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
@@ -20,7 +21,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 
-public class GameEditorScreen {
+public class GameEditorScreen extends Screen{
 
 	
 	public static void draw(Graphics g) {

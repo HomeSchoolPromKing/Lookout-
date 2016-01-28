@@ -56,7 +56,7 @@ public class Game {
 	
 	public static void logic(){
 		if(currentLevel.isCompleted) {
-			state = IN_END_LEVEL;
+			//state = IN_END_LEVEL;
 			Level.nextLevel();
 		}
 		else if(currentLevel.isFailed) {
