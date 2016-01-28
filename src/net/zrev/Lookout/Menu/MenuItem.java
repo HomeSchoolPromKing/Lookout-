@@ -70,15 +70,15 @@ public class MenuItem {
 			Game.startGame();
 			setGameState(IN_GAME);
 		}
-		//else if(name.equals("Options")) {
-		////	setGameState(GameState.OPTIONS);
-		//}
+		else if(name.equals("Options")) {
+		//	setGameState(GameState.OPTIONS);
+		}
 		//else if(name.equals("Quit")) {
 		//	setGameState(GameState.AREYOUSURE);
 		//}
-		//else if(name.equals("Back")) {
-		//	setGameState(Globals.previous);
-		//}
+		else if(name.equals("Back")) {
+			setGameState(PREVIOUS_SCREEN);
+		}
 		//else if(name.equals("Creative")) {
 		//	Game.startGame();
 		//Engine.init();

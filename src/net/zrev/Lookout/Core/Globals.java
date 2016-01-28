@@ -27,7 +27,8 @@ public class Globals {
 	}
 	
 	public static void setGameState(Screen newState){
-		state = newState;
+		PREVIOUS_SCREEN = CURRENT_SCREEN;
+		CURRENT_SCREEN = newState;
 	}
 	
 	public static void hideCursor(){
@@ -50,12 +51,13 @@ public class Globals {
 	
 	public static final Screen IN_GAME = new GameScreen();
 	public static final  Screen IN_EDITOR = new GameEditorScreen();
+	public static Screen PREVIOUS_SCREEN = new StartMenuScreen();
 	
 	public static final int IN_END_LEVEL = 3;
 	
 	public static final Screen HOME_MENU = new StartMenuScreen();
 	
-	public static Screen state = HOME_MENU;
+	public static Screen CURRENT_SCREEN = HOME_MENU;
 	
 	public static boolean DEBUG = false;
 }

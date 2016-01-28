@@ -11,25 +11,25 @@ import static net.zrev.Lookout.Core.Globals.*;
 public class Screen {
 	
 	public static void draw(Graphics g ){
-		if(state == IN_GAME)
+		if(CURRENT_SCREEN == IN_GAME)
 			GameScreen.draw(g);
-		else if(state == IN_EDITOR) {
+		else if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditorScreen.draw(g);
 		}
 		//else if(state == IN_END_LEVEL) {
 			
 		//}
-		else if(state == HOME_MENU) {
+		else if(CURRENT_SCREEN == HOME_MENU) {
 			((StartMenuScreen) HOME_MENU).paint(g);
 		}
 	}
 	
 	public static void keyPressed(int key, char c) {
-		if(state == HOME_MENU) {
+		if(CURRENT_SCREEN == HOME_MENU) {
 			((StartMenuScreen) HOME_MENU).inputHandler(key, c);
 		}
 		
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.keyPressed(key, c);
 		}
 	}

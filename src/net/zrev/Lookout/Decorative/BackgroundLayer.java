@@ -36,7 +36,7 @@ public class BackgroundLayer {
 		}
 		
 		
-		if(state == IN_GAME || (state == IN_EDITOR && !GameEditor.hideDecorations)) {
+		if(CURRENT_SCREEN == IN_GAME || (CURRENT_SCREEN == IN_EDITOR && !GameEditor.hideDecorations)) {
 			for(BackgroundShape bs : backgroundShapes) {
 				bs.draw(g);
 				bs.setX(bs.getX() - bs.speedX);
@@ -51,7 +51,7 @@ public class BackgroundLayer {
 
 	
 	public static void drawBackgroundDecorations(Graphics g) {
-		if(state == IN_GAME || (state == IN_EDITOR && !GameEditor.hideDecorations)) {
+		if(CURRENT_SCREEN == IN_GAME || (CURRENT_SCREEN == IN_EDITOR && !GameEditor.hideDecorations)) {
 			for(Decoration a : Level.backgroundDecorations) {
 				g.drawAnimation(a.a, a.x, a.y);
 			}

@@ -24,14 +24,14 @@ public class Controls {
 			}
 		}
 		if(c == 'g' || c == 'G'){
-			if(state == IN_GAME) {
+			if(CURRENT_SCREEN == IN_GAME) {
 				GameEditor.init();
 				Logic.changeState();
-				state = IN_EDITOR;
+				CURRENT_SCREEN = IN_EDITOR;
 			}
-			else if(state == IN_EDITOR) {
+			else if(CURRENT_SCREEN == IN_EDITOR) {
 				Logic.changeState();
-				state = IN_GAME;
+				CURRENT_SCREEN = IN_GAME;
 			}
 		}
 	}
@@ -44,11 +44,11 @@ public class Controls {
 
 	public static void mousePressed(int button, int x, int y) {
 		Logic.mousePressed = true;
-		if(state == IN_GAME) {
+		if(CURRENT_SCREEN == IN_GAME) {
 			if(button == 0) {
 				Logic.placeObject();
 			}
-			else if(button == 1 && state == IN_GAME) {
+			else if(button == 1 && CURRENT_SCREEN == IN_GAME) {
 				Logic.removeObject();
 			}
 		}
@@ -56,7 +56,7 @@ public class Controls {
 			Logic.rightMousePressed = true;
 		}
 		
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mousePressed(button, x, y);
 		}
 	}
@@ -73,13 +73,13 @@ public class Controls {
 				Game.itemSelected++;
 			}
 		}
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mouseWheelMoved(change);
 		}
 	}
 
 	public static void mouseDragged(int ox, int oy, int nx, int ny) {
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mouseDragged(ox, oy, nx,ny);
 		}
 	}
@@ -87,11 +87,11 @@ public class Controls {
 	public static void mouseMoved(int ox, int oy, int nx, int ny) {
 		float tempX = (float) Core.input.getMouseX() / scaleX;
 		float tempY = (float) Core.input.getMouseY() / scaleY;
-		if(state == IN_GAME) {
+		if(CURRENT_SCREEN == IN_GAME) {
 			Globals.mouseX = (int) tempX + Camera.x - Game.p.velocityX;
 			Globals.mouseY = (int) tempY - Game.p.velocityY + Camera.y;
 		}
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mouseMoved(ox, oy, nx,ny);
 		}
 	}

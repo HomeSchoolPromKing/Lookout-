@@ -59,7 +59,7 @@ public class Core extends BasicGame {
 		}
 		try {
 			Resources.init();
-			state = HOME_MENU;
+			CURRENT_SCREEN = HOME_MENU;
 			//Game.startGame();
 		} 
 		catch (Exception e) {
@@ -76,7 +76,7 @@ public class Core extends BasicGame {
 	public void keyReleased(int key, char c) {
 		super.keyReleased(key, c);
 		Controls.keyReleased(key, c);
-		if(state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_EDITOR) {
 			if(key == 12) {
 				if(zoom == 1.0F)
 					zoom = 0.5F;
@@ -124,7 +124,7 @@ public class Core extends BasicGame {
 		scaling();
 		input = gc.getInput();
 		
-		if(state == IN_GAME || state == IN_EDITOR) {
+		if(CURRENT_SCREEN == IN_GAME || CURRENT_SCREEN == IN_EDITOR) {
 			Camera.update();
 			Globals.mouseX += Game.p.velocityX;
 			Globals.mouseY += Game.p.velocityY;

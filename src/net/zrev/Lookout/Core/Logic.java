@@ -13,11 +13,11 @@ import static net.zrev.Lookout.Core.Globals.*;
 
 public class Logic {
 	public static void logic(){
-		if(state == IN_GAME) {
+		if(CURRENT_SCREEN == IN_GAME) {
 			Game.logic();
 			hideCursor();
 		}
-		else if(state == IN_EDITOR) {
+		else if(CURRENT_SCREEN == IN_EDITOR) {
 		}
 	}
 
@@ -41,7 +41,7 @@ public class Logic {
 
 		Entity e =  (Entity) Game.currentLevel.inventory.get(Game.itemSelected).clone();
 		float x, y;
-		if(GameEditor.snapObjects && Globals.state == Globals.IN_EDITOR) {
+		if(GameEditor.snapObjects && Globals.CURRENT_SCREEN == Globals.IN_EDITOR) {
 			x = Math.round(Globals.mouseX / 32) * 32;
 			y = Math.round(Globals.mouseY / 32) * 32;
 		}

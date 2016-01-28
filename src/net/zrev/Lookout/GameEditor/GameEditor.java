@@ -128,7 +128,7 @@ public class GameEditor {
 	private static void placeObject(){
 		Entity e =  (Entity) items.get(GameEditor.itemSelected).clone();
 		float x, y;
-		if(GameEditor.snapObjects && Globals.state == Globals.IN_EDITOR) {
+		if(GameEditor.snapObjects && Globals.CURRENT_SCREEN == Globals.IN_EDITOR) {
 			x = Math.round(Globals.mouseX / 32) * 32;
 			y = Math.round(Globals.mouseY / 32) * 32;
 		}
@@ -238,9 +238,9 @@ public class GameEditor {
 
 
 	public static boolean canPlace(float x, float y) {
-		if(state == IN_EDITOR && x < Globals.width + Camera.x - 300 && !showItemSelect)
+		if(CURRENT_SCREEN == IN_EDITOR && x < Globals.width + Camera.x - 300 && !showItemSelect)
 			return true;
-		else if(state == IN_GAME)
+		else if(CURRENT_SCREEN == IN_GAME)
 			return true;
 		else
 			return false;
