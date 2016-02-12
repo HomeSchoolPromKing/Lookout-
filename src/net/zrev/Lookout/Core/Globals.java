@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import net.zrev.Lookout.Account.UserPreferences;
 import net.zrev.Lookout.Game.Camera;
+import net.zrev.Lookout.Game.Game;
+import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.Screens.GameEditorScreen;
 import net.zrev.Lookout.Screens.GameScreen;
 import net.zrev.Lookout.Screens.StartMenuScreen;
@@ -23,7 +25,6 @@ public class Globals {
 		}
 		Globals.width = (Display.getWidth()) / ((Display.getWidth() / 1920F) * Core.zoom);
 		Globals.height = ( Display.getHeight()) / ((Display.getHeight() / 1080F) * Core.zoom);
-
 	}
 	
 	public static void setGameState(Screen newState){
@@ -49,6 +50,7 @@ public class Globals {
 	public static float height = 1080;
 
 	
+
 	public static final Screen IN_GAME = new GameScreen();
 	public static final  Screen IN_EDITOR = new GameEditorScreen();
 	public static Screen PREVIOUS_SCREEN = new StartMenuScreen();

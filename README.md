@@ -1,7 +1,5 @@
 # Lookout-
 
-1 - No double jump (not collectable until on ground) - Will
-
 1 - Flying enemy - Zack
 
 1 - Game interface - Will
@@ -12,7 +10,7 @@
 
 2 - Score based on how many items you used - Zack
 
-2 - Score based on time - Zack
+2 - Score based on time (penalty for not completing fast enough) - Zack
 
 3 - Scroll to show level - Both
 

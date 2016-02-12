@@ -10,7 +10,6 @@ import java.util.TimerTask;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
 import net.zrev.Lookout.Decorative.NorthernLights;
 import net.zrev.Lookout.Game.Camera;
-import net.zrev.Lookout.Game.Controls;
 import net.zrev.Lookout.Game.Game;
 
 import org.lwjgl.opengl.Display;
@@ -27,14 +26,6 @@ public class Core extends BasicGame {
 
 	public Core(String gamename) {
 		super(gamename);
-//		Timer t = new Timer();
-//		t.scheduleAtFixedRate(new TimerTask() {
-//			public void run(){
-//				System.out.println("hi");
-//			}
-//		}
-//			, 100, 1000);
-		
 	}
 
 	@Override
@@ -43,24 +34,11 @@ public class Core extends BasicGame {
 		Display.setResizable(true);
 		gameC.setFullscreen(false);
 		gameC.setShowFPS(false);
-
 		input = gc.getInput();
-
-		float absstepmax = 50;
-		float ymin = -100;
-		float ymax = 100;
-		float y = 5;
-
-		for(int i = 0; i < Globals.width; i+=10) {
-			y += (Math.random() * (2F * absstepmax) - absstepmax - 1F);
-			y = Math.max(ymin, Math.min(ymax, y));
-			BackgroundLayer.theLights.add(new NorthernLights(i, y));
-
-		}
+		
 		try {
 			Resources.init();
 			CURRENT_SCREEN = HOME_MENU;
-			//Game.startGame();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -70,51 +48,37 @@ public class Core extends BasicGame {
 
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
-		Controls.keyPressed(key, c);
+		Screen.keyPressed(key, c);
 	}
 
 	public void keyReleased(int key, char c) {
 		super.keyReleased(key, c);
-		Controls.keyReleased(key, c);
-		if(CURRENT_SCREEN == IN_EDITOR) {
-			if(key == 12) {
-				if(zoom == 1.0F)
-					zoom = 0.5F;
-				else
-					zoom = 1.0F;
-			}
-			if(key == 13) {
-				if(zoom == 1.0F)
-					zoom = 1.5F;
-				else
-					zoom = 1.0F;
-			}
-		}
+		Screen.keyReleased(key, c);
 	}
 
 	public void mousePressed(int button, int x, int y) {
 		super.mousePressed(button, x, y);
-		Controls.mousePressed(button, x, y);
+		Screen.mousePressed(button, x, y);
 	}
 
 	public void mouseWheelMoved(int change) {
 		super.mouseWheelMoved(change);
-		Controls.mouseWheelMoved(change);
+		Screen.mouseWheelMoved(change);
 	}
 
 	public void mouseDragged(int ox, int oy, int nx, int ny) {
 		super.mouseDragged(ox, oy, nx, ny);
-		Controls.mouseDragged(ox, oy, nx, ny);
+		Screen.mouseDragged(ox, oy, nx, ny);
 	}
 
 	public void mouseMoved(int ox, int oy, int nx, int ny) {
 		super.mouseMoved(ox, oy, nx, ny);
-		Controls.mouseMoved(ox, oy, nx, ny);
+		Screen.mouseMoved(ox, oy, nx, ny);
 	}
 
 	public void mouseReleased(int button, int x, int y) {
 		super.mouseReleased(button, x, y);
-		Controls.mouseReleased(button, x, y);
+		Screen.mouseReleased(button, x, y);
 	}
 
 	@Override
@@ -123,20 +87,7 @@ public class Core extends BasicGame {
 		scaleY =  ((Display.getHeight()) / 1080F) * zoom;
 		scaling();
 		input = gc.getInput();
-		
-		if(CURRENT_SCREEN == IN_GAME || CURRENT_SCREEN == IN_EDITOR) {
-			Camera.update();
-			Globals.mouseX += Game.p.velocityX;
-			Globals.mouseY += Game.p.velocityY;
-			Logic.logic();
-	        if (shakeAmt>0f) {
-	            shakeTime -= delta;
-	            //new shakeX/Y
-	            if (shakeTime <= 0) {
-	                shake();
-	            }
-	        }	
-		}
+		Camera.update();
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -151,18 +102,18 @@ public class Core extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		
 		g.scale(((Display.getWidth() ) / 1920F) * zoom, ((Display.getHeight()) / 1080F) * zoom);
-		
-		
 		g.translate(-Camera.x, -Camera.y);
+		
         if (shakeX!=0 && shakeY!=0)
             g.translate(shakeX, shakeY);
-		Screen.draw(g);
+		
+        Screen.draw(g);
+		
         if (shakeX!=0 && shakeY!=0)
             g.translate(-shakeX, -shakeY);
 	}
-
+	
 	//http://stackoverflow.com/questions/7168747/java-creating-self-extracting-jar-that-can-extract-parts-of-itself-out-of-the-a
 
 	public static void main(String[] args) {
@@ -177,36 +128,10 @@ public class Core extends BasicGame {
 			ex.printStackTrace();
 		}
 	}
-
-	public static void shake() {
-		shakeX = (float)(Math.random()*shakeAmt);
-		shakeY = (float)(Math.random()*shakeAmt);
-		if (SHAKE_SNAP) {
-			shakeX = (int)shakeX;
-			shakeY = (int)shakeY;
-		}
-		shakeTime = SHAKE_DELAY;
-		shakeAmt -= SHAKE_DECAY*SHAKE_INTENSITY;
-		if (shakeAmt<0f)
-			shakeAmt = 0f;
-	}
-	
 	
 	public static float zoom = 1.0F;
-    public static final boolean SHAKE_SNAP = false;
-    
-    /** How far the shake should extend in pixels. */
-    public static final int SHAKE_INTENSITY = 15;
-    
-    public static final float SHAKE_DECAY = 0.03f;
-    
-    /** Delay in ms between each new shake. */
-    public static final int SHAKE_DELAY = 45;
-
-	private static int shakeTime = SHAKE_DELAY;
-	public static float shakeAmt = 0f;
-	private static float shakeX = 0f;
-	private static float shakeY = 0f;
+	public static float shakeX = 0f;
+	public static float shakeY = 0f;
 
 	public static int lastW = 960, lastH = 540;
 	public static AppGameContainer appgc;

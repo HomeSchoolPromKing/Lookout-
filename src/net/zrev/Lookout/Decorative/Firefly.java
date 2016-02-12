@@ -17,10 +17,10 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 
-public class BackgroundShape extends Rectangle {
+public class Firefly extends Rectangle {
 
 	//Rectangle
-	public BackgroundShape(float x, float y, float width, float height, Color c, float speedX, float speedY) {
+	public Firefly(float x, float y, float width, float height, Color c, float speedX, float speedY) {
 		//super(new float[] {x, y, x, y + height, x + width, y + height, x+width, y});
 		super(x, y, width, height);
 		this.width = width;

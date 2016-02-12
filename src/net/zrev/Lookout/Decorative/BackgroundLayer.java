@@ -23,10 +23,6 @@ public class BackgroundLayer {
 		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
 
 		if(Resources.initated) {
-			g.pushTransform();
-			g.scale(2.0F, 2.5F);
-			//g.drawImage(Resources.bg, Camera.x, Camera.y);
-			g.popTransform();
 			g.drawImage(Resources.bg55, Camera.x, Camera.y);
 		}
 		
@@ -35,9 +31,8 @@ public class BackgroundLayer {
 			nl.update();
 		}
 		
-		
 		if(CURRENT_SCREEN == IN_GAME || (CURRENT_SCREEN == IN_EDITOR && !GameEditor.hideDecorations)) {
-			for(BackgroundShape bs : backgroundShapes) {
+			for(Firefly bs : backgroundShapes) {
 				bs.draw(g);
 				bs.setX(bs.getX() - bs.speedX);
 				bs.setY(bs.getY() - bs.speedY);
@@ -45,7 +40,6 @@ public class BackgroundLayer {
 			}
 			BackgroundLayer.drawBackgroundDecorations(g);
 		}
-		
 		update();
 	}
 
@@ -69,7 +63,7 @@ public class BackgroundLayer {
 		loadBackgroundShapes();
 	}
 
-	private static BackgroundShape generateShape(){
+	private static Firefly generateShape(){
 		float tX = new Random().nextInt((int) (Globals.width * 1.5F)) + Camera.x;
 		float tY = new Random().nextInt((int) Globals.height);
 		float tW = new Random().nextInt(32)+32;
@@ -95,7 +89,7 @@ public class BackgroundLayer {
 		float speedY = Math.abs(new Random().nextInt(3)+2);
 		speedX *= multiplerX;
 		speedY *= multiplerY;
-		BackgroundShape toAdd = new BackgroundShape(tX, tY, tW, tH, randColor(), speedX + 1, speedY + 1);
+		Firefly toAdd = new Firefly(tX, tY, tW, tH, randColor(), speedX + 1, speedY + 1);
 		return toAdd;
 	}
 	
@@ -136,7 +130,7 @@ public class BackgroundLayer {
 	
 	
 	public static ArrayList<NorthernLights> theLights = new ArrayList<NorthernLights>();
-	public static ArrayList<BackgroundShape> backgroundShapes = new ArrayList<BackgroundShape>();
-	public static BackgroundShape toRemove = null;
+	public static ArrayList<Firefly> backgroundShapes = new ArrayList<Firefly>();
+	public static Firefly toRemove = null;
 
 }

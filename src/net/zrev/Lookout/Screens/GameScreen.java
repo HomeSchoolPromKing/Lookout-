@@ -10,7 +10,7 @@ import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
-import net.zrev.Lookout.Decorative.BackgroundShape;
+import net.zrev.Lookout.Decorative.Firefly;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
@@ -29,14 +29,10 @@ import org.newdawn.slick.geom.Rectangle;
 public class GameScreen extends Screen {
 
 	public static void draw(Graphics g){
-
-
 		BackgroundLayer.draw(g);
-
-
+		
 		for(Entity e : Game.currentLevel.gameObjects) {
 			e.update(Globals.delta);
-
 			//If the entity is within the camera rectangle, draw it.
 			if(Camera.shouldRender(e.getBoundingBox())) {
 				e.draw(g);
@@ -55,6 +51,7 @@ public class GameScreen extends Screen {
 	}
 
 
+	//TODO: Add sexy drawing area
 	public static void drawItemSelection(Graphics g){
 		for(int i = 0; i < Game.currentLevel.inventory.size(); i++) {
 			if(Game.itemSelected == i) {
@@ -69,6 +66,5 @@ public class GameScreen extends Screen {
 			}
 		}
 	}
-
-
+	
 }

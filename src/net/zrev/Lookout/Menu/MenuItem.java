@@ -20,12 +20,6 @@ import org.newdawn.slick.util.ResourceLoader;
 public class MenuItem {
 
 	public MenuItem(String name) {
-		try {
-
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
 		this.name = name;
 	}
 
@@ -41,11 +35,10 @@ public class MenuItem {
 				else
 					menufont.drawString((width / 2), (height + y) / 2,">" + name, Color.black);
 
-		} catch (SlickException e) {
+		} 
+		catch (SlickException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
 	public void select(boolean option) {
@@ -71,7 +64,7 @@ public class MenuItem {
 			setGameState(IN_GAME);
 		}
 		else if(name.equals("Options")) {
-		//	setGameState(GameState.OPTIONS);
+		//	setGameState(OPTIONSMENU);
 		}
 		//else if(name.equals("Quit")) {
 		//	setGameState(GameState.AREYOUSURE);
@@ -98,11 +91,8 @@ public class MenuItem {
 		//}
 	}
 
-
 	public boolean selected = false;
 	public String name;
 
 	public UnicodeFont menufont = new UnicodeFont(new Font("Arial", Font.PLAIN, 72));;
-
-
 }

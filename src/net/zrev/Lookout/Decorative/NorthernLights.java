@@ -14,6 +14,19 @@ import org.newdawn.slick.SpriteSheet;
 
 public class NorthernLights {
 
+	public static void init(){
+		float absstepmax = 50;
+		float ymin = -100;
+		float ymax = 100;
+		float y = 5;
+		for(int i = 0; i < Globals.width; i+=10) {
+			y += (Math.random() * (2F * absstepmax) - absstepmax - 1F);
+			y = Math.max(ymin, Math.min(ymax, y));
+			BackgroundLayer.theLights.add(new NorthernLights(i, y));
+		}
+	}
+	
+	
 	public NorthernLights(float x, float y){
 		r = new Random();
 		startColor = new Color(0, r.nextInt(255), r.nextInt(255), r.nextInt(100));

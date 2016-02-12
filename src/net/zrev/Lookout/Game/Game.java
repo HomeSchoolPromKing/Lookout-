@@ -19,7 +19,7 @@ import org.newdawn.slick.geom.Shape;
 import net.zrev.Lookout.Account.UserPreferences;
 import net.zrev.Lookout.Core.Globals;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
-import net.zrev.Lookout.Decorative.BackgroundShape;
+import net.zrev.Lookout.Decorative.Firefly;
 import net.zrev.Lookout.GameEditor.GameEditor;
 import net.zrev.Lookout.GameEditor.Placeable;
 import net.zrev.Lookout.GameObjects.Entity;
@@ -54,7 +54,47 @@ public class Game {
 		}
 	}
 	
-	public static void logic(){
+
+	public static void removeObject() {
+		for(Entity e : Game.currentLevel.gameObjects) {
+			if(new Rectangle(Globals.mouseX, Globals.mouseY, 2, 2).intersects(e.getBoundingBox())) {
+				if(e.wasPlaced)
+					Game.currentLevel.toRemove = e;
+			}
+		}
+	}
+
+	public static void placeObject(){
+
+		Entity e =  (Entity) Game.currentLevel.inventory.get(Game.itemSelected).clone();
+		float x, y;
+		if(GameEditor.snapObjects && Globals.CURRENT_SCREEN == Globals.IN_EDITOR) {
+			x = Math.round(Globals.mouseX / 32) * 32;
+			y = Math.round(Globals.mouseY / 32) * 32;
+		}
+		else {
+			x =  Globals.mouseX;
+			y =  Globals.mouseY;
+		}
+
+		try {
+			e.x = x;
+			e.y = y;
+			e.wasPlaced = true;
+			e.updateBounds();
+			Game.currentLevel.gameObjects.add(e);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public static void update(){
+		
+		Globals.mouseX += Game.p.velocityX;
+		Globals.mouseY += Game.p.velocityY;
+		
+		hideCursor();
+		
 		if(currentLevel.isCompleted) {
 			//state = IN_END_LEVEL;
 			Level.nextLevel();
@@ -63,8 +103,33 @@ public class Game {
 			Level.resetLevel();
 		}
 	}
-	//Let's try something like this collision detection.
-	//http://www.java-gaming.org/index.php?topic=26953.0
+	
+	
+	public static void mouseWheelMoved(int change) {
+		change = change / Math.abs(change);
+		if(change < 0) {
+			if (Game.itemSelected + change >= 0) {
+				Game.itemSelected--;
+			}
+		}
+		if(change > 0 ) {
+			if (Game.itemSelected + change <= Game.currentLevel.inventory.size() - 1) {
+				Game.itemSelected++;
+			}
+		}
+	}
+	
+	public void keyPressed(int key, char c){
+		if(Character.isDigit(c)) {
+			if(Integer.parseInt(c+"") <= Game.currentLevel.inventory.size()) {
+				Game.itemSelected = Integer.parseInt(c+"")-1;
+			}
+			if(Integer.parseInt(c+"") <= GameEditor.items.size()) {
+				GameEditor.itemSelected = Integer.parseInt(c+"")-1;
+			}
+		}
+	}
+	
 	public static Player p = null;
 	
 	public static int gameWidth = 1920, gameHeight = 1080;
@@ -80,4 +145,5 @@ public class Game {
 	public static Level currentLevel = new Level(1);
 
 	public static int itemSelected = 0;
+
 }

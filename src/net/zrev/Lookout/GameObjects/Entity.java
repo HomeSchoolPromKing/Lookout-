@@ -87,23 +87,36 @@ public abstract class Entity implements Cloneable {
 					if(this.y + this.height > e.y && this.controlable == true && falling && e instanceof Floor) {
 						this.y = e.y - this.height;
 					}
-					if(falling) falling = false;
+					if(e.isSolid) {
+						onGround = true;
+						if(falling) falling = false;
+					}
 				}
 				else {
-					if(!falling && !jumping) {
-						gravity = 0.0F;
-						falling = true;
+					if(!onGround) {
+						if(!falling && !jumping) {
+							gravity = 0.0F;
+							falling = true;
+							onGround = false;
+						}
+					}
+					else {
+						resetGround = true;
 					}
 				}
 
 
 				if(right.intersects(e.getBoundingBox())) {
-					velocityX = 0.0F;
+					if(e.isSolid) {
+						velocityX = 0.0F;
+					}
 					//x = e.x - e.width;
 					handleAction(e, DRIGHT);
 				}
 				if(left.intersects(e.getBoundingBox())) {
-					velocityX = 0.0F;
+					if(e.isSolid) {
+						velocityX = 0.0F;
+					}
 					//x = e.x + e.width;
 					handleAction(e, DLEFT);
 				}
@@ -153,13 +166,19 @@ public abstract class Entity implements Cloneable {
 			x += velocityX;
 			y += velocityY;
 		}
+		
+		if(resetGround) {
+			resetGround = false;
+			onGround = false;
+		}
 	}
 
 	public void handleAction(Entity e, int direction){
 		//Is placeable, basically
 		if(e.passive) {
-			if(e instanceof SwitchDirections) {
+			if(e instanceof SwitchDirections && !e.collected) {
 				switchDirection(-1);
+				e.collected = true;
 			}
 			else if (e instanceof Coin) {
 				if (e.collected == false && this instanceof Player){
@@ -255,15 +274,15 @@ public abstract class Entity implements Cloneable {
 				falling = true;
 			}
 		}
-		if(falling) {
+		else if(falling) {
 			gravity += 0.5F;
 			velocityY = (int) gravity;
 		}
 	}
 
 	public void jump() {
-		if(!jumping) {
-			y-= 10;
+		if(!jumping && onGround) {
+			y -= 10;
 			gravity = 12.0F;
 			jumping = true;
 		}
@@ -310,7 +329,7 @@ public abstract class Entity implements Cloneable {
 
 	public float gravity = 0.0f; 
 
-	public boolean falling = false, jumping = false;
+	public boolean falling = false, jumping = false, onGround = false, resetGround = false;;
 
 	public boolean isSolid = false;
 

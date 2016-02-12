@@ -37,6 +37,29 @@ public class Player extends Entity {
 			e.printStackTrace();
 		}
 	}
+	
+	public void screenShake(int delta){
+        if (shakeAmt>0f) {
+            shakeTime -= delta;
+            //new shakeX/Y
+            if (shakeTime <= 0) {
+                shake();
+            }
+        }	
+	}
+	
+	public static void shake() {
+		Core.shakeX = (float)(Math.random()*shakeAmt);
+		Core.shakeY = (float)(Math.random()*shakeAmt);
+		if (SHAKE_SNAP) {
+			Core.shakeX = (int)Core.shakeX;
+			Core.shakeY = (int)Core.shakeY;
+		}
+		shakeTime = SHAKE_DELAY;
+		shakeAmt -= SHAKE_DECAY*SHAKE_INTENSITY;
+		if (shakeAmt<0f)
+			shakeAmt = 0f;
+	}
 
 	public void draw(Graphics g) {
 		super.draw(g);
@@ -55,6 +78,7 @@ public class Player extends Entity {
 				anim = runLeft;
 			//ai.update(delta);
 		}
+		screenShake(delta);
 	}
 
 	public void handleAction(Entity e, int direction) {
@@ -65,12 +89,12 @@ public class Player extends Entity {
 		}
 		
 		if(e instanceof Saw) {
-			Core.shakeAmt = Core.SHAKE_INTENSITY;
-			Core.shake();
+			shakeAmt = SHAKE_INTENSITY;
+			shake();
 		}
 		if(e instanceof Enemy) {
-			Core.shakeAmt = Core.SHAKE_INTENSITY;
-			Core.shake();
+			shakeAmt = SHAKE_INTENSITY;
+			shake();
 		}
 		if(e instanceof Floor) {
 			//Is breakable
@@ -86,16 +110,22 @@ public class Player extends Entity {
 		}
 	}
 
-	public int getHealth() {
-		return health;
-	}
+	
+    public static final boolean SHAKE_SNAP = false;
+    
+    /** How far the shake should extend in pixels. */
+    public static final int SHAKE_INTENSITY = 15;
+    
+    public static final float SHAKE_DECAY = 0.03f;
+    
+    /** Delay in ms between each new shake. */
+    public static final int SHAKE_DELAY = 45;
 
-	public void setHealth(int health) {
-		this.health = health;
-	}
+	private static int shakeTime = SHAKE_DELAY;
+	public static float shakeAmt = 0f;
+
 
 	private AfterImage ai = null;
 	public Animation runRight = null, runLeft = null;
-	private int health = 0;
 
 }

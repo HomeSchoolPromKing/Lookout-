@@ -1,6 +1,7 @@
 package net.zrev.Lookout.GameEditor;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import net.zrev.Lookout.Core.Core;
 import net.zrev.Lookout.Core.Globals;
-import net.zrev.Lookout.Core.Logic;
+import static net.zrev.Lookout.Core.Screen.*;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.Game.Level;
@@ -28,7 +29,7 @@ public class GameEditor {
 	public static void init(){
 		Camera.x = 0;
 		Camera.y = 0;
-
+		
 		//Init UI items
 		linesBox = new Rectangle(Camera.x + (Globals.width - 300) + 10, 250, 200, 30);
 		snapBox = new Rectangle(Camera.x + (Globals.width - 300) + 10, 300, 200, 30);
@@ -36,6 +37,7 @@ public class GameEditor {
 
 		Core.gameC.setDefaultMouseCursor();
 		loadItems();
+		GameEditor.changeState();
 	}
 
 	public static void update(){
@@ -80,6 +82,21 @@ public class GameEditor {
 			showItemSelect = !showItemSelect;
 		}
 	}
+	
+	public static void keyReleased(int key, char c) {
+		if(key == 12) {
+			if(Core.zoom == 1.0F)
+				Core.zoom = 0.5F;
+			else
+				Core.zoom = 1.0F;
+		}
+		if(key == 13) {
+			if(Core.zoom == 1.0F)
+				Core.zoom = 1.5F;
+			else
+				Core.zoom = 1.0F;
+		}		
+	}
 
 	public static void mouseDragged(int ox, int oy, int nx, int ny) {
 		for(Entity e : Game.currentLevel.gameObjects) {
@@ -100,7 +117,7 @@ public class GameEditor {
 			}
 		}
 		
-		if(Logic.rightMousePressed && Logic.shiftHeld) {
+		if(rightMousePressed && shiftHeld) {
 			if(highlight != null) {
 				highlight.setWidth(((nx / scaleX) + Camera.x) - highlight.getX());
 				highlight.setHeight(((ny / scaleY) + Camera.y) - highlight.getY());
@@ -167,7 +184,7 @@ public class GameEditor {
 	}
 
 	private static void shiftPlace(){
-		if(startShift == null && Logic.shiftHeld) {
+		if(startShift == null && shiftHeld) {
 			if(snapObjects) {
 				startShift = new Point(Math.round(Globals.mouseX / 32) * 32,
 						Math.round(Globals.mouseY / 32) * 32);
@@ -176,7 +193,7 @@ public class GameEditor {
 				startShift = new Point(Globals.mouseX, Globals.mouseY);
 			}
 		}
-		else if(startShift != null && Logic.shiftHeld) {
+		else if(startShift != null && shiftHeld) {
 			for(int i = (int) startShift.getX(); i < Globals.mouseX; i+=items.get(itemSelected).width) {
 				for(int j = (int) startShift.getY(); j < Globals.mouseY; j+=items.get(itemSelected).height) {
 					placeObject(i, j);
@@ -187,11 +204,11 @@ public class GameEditor {
 	}
 	
 	public static void mousePressed(int button, int x, int y){
-		if(button == 0 && !Logic.shiftHeld) {
+		if(button == 0 && !shiftHeld) {
 			placeObject();
 		}
 		else {
-			if(Logic.shiftHeld && button == 0) {
+			if(shiftHeld && button == 0) {
 				shiftPlace();
 			}
 		}
@@ -217,10 +234,16 @@ public class GameEditor {
 				}
 			}
 			if(ee == null) {
-				Logic.changeState();
+				changeState();
 			}
 			if(highlight == null || Math.abs(highlight.getWidth()) > 0 )
 				highlight = new Rectangle(Globals.mouseX, Globals.mouseY, 1, 1);
+		}
+	}
+	
+	public static void changeState(){
+		for(Entity e : Game.currentLevel.gameObjects) {
+			e.isSelected = false;
 		}
 	}
 
@@ -275,4 +298,5 @@ public class GameEditor {
 	public static int itemSelected = 0;
 	public static ArrayList<Entity> items = new ArrayList<Entity>();
 	public static Rectangle snapBox, hideDecBox, linesBox;
+
 }

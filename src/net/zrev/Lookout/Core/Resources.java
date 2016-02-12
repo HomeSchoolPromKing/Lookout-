@@ -40,7 +40,6 @@ public class Resources {
 			awtFont2 = awtFont2.deriveFont(36f); // set font size
 			gameFont = new TrueTypeFont(awtFont2, false);
 			
-			
 			awtFont2 = awtFont2.deriveFont(20f); // set font size
 			editorFont = new TrueTypeFont(awtFont2, false);
 		}

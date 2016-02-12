@@ -1,7 +1,7 @@
 package net.zrev.Lookout.Screens;
 
 import net.zrev.Lookout.Core.Globals;
-import net.zrev.Lookout.Core.Logic;
+import static net.zrev.Lookout.Game.Controls.*;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
@@ -41,10 +41,7 @@ public class GameEditorScreen extends Screen{
 			}
 		}
 		for(Entity e : Game.currentLevel.gameObjects) {
-			//If the entity is within the camera rectangle, draw it.
-			//if(Camera.shouldRender(e.getBoundingBox())) {
-				e.draw(g);
-			//}
+			e.draw(g);
 		}
 		
 		drawItemGhost(g);
@@ -102,7 +99,7 @@ public class GameEditorScreen extends Screen{
 			g.drawRect(((row * 128) + 128), ((col * 128) + 128), 96, 96);
 			Rectangle temp = new Rectangle((row * 128) + 128, ((col * 128) + 128), 96,96);
 			if(event != null && event.intersects(temp)) {
-				if(Logic.mousePressed) {
+				if(mousePressed) {
 					itemSelected = i;
 				}
 				g.setColor(new Color(255,0,0,100));
@@ -161,7 +158,7 @@ public class GameEditorScreen extends Screen{
 				}
 				Rectangle temp = new Rectangle((Globals.width - 250) + (row * 64) + Camera.x, (Globals.height/2) + (col * 64) + Camera.y, 64,64);
 				if(event != null && event.intersects(temp)) {
-					if(Logic.mousePressed) {
+					if(mousePressed) {
 						if(items.get(itemSelected) instanceof Floor) {
 							Floor f = (Floor) items.get(itemSelected);
 							f.tileId = i;
@@ -197,7 +194,5 @@ public class GameEditorScreen extends Screen{
 	private static void drawItemGhost(Graphics g){
 		g.drawAnimation(items.get(itemSelected).anim, Globals.mouseX, Globals.mouseY);
 	}
-	
-	
 	
 }
