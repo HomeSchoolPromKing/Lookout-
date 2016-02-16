@@ -45,10 +45,26 @@ public class Core extends BasicGame {
 		}
 	}
 
-
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
 		Screen.keyPressed(key, c);
+		if(key == 87) {
+			try {
+				if(fullScreen) {
+					appgc.setDisplayMode(lastW, lastH, false);
+					fullScreen = false;
+				}
+				else {
+					lastW = Display.getWidth();
+					lastH = Display.getHeight();
+					appgc.setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
+					fullScreen = true;
+				}
+			} 
+			catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void keyReleased(int key, char c) {
@@ -132,6 +148,7 @@ public class Core extends BasicGame {
 	public static float zoom = 1.0F;
 	public static float shakeX = 0f;
 	public static float shakeY = 0f;
+	public static boolean fullScreen = false;
 
 	public static int lastW = 960, lastH = 540;
 	public static AppGameContainer appgc;

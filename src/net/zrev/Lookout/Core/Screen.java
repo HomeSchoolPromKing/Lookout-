@@ -3,6 +3,7 @@ package net.zrev.Lookout.Core;
 import net.zrev.Lookout.Game.Camera;
 import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameEditor.GameEditor;
+import net.zrev.Lookout.Menu.Menu;
 import net.zrev.Lookout.Screens.GameEditorScreen;
 import net.zrev.Lookout.Screens.GameScreen;
 import net.zrev.Lookout.Screens.StartMenuScreen;
@@ -11,7 +12,7 @@ import org.newdawn.slick.Graphics;
 
 import static net.zrev.Lookout.Core.Globals.*;
 public class Screen {
-	
+
 	public static void draw(Graphics g ){
 		if(CURRENT_SCREEN == IN_GAME) {
 			GameScreen.draw(g);
@@ -21,18 +22,18 @@ public class Screen {
 			GameEditorScreen.draw(g);
 		}
 		//else if(state == IN_END_LEVEL) {
-			
+
 		//}
-		else if(CURRENT_SCREEN == HOME_MENU) {
-			((StartMenuScreen) HOME_MENU).paint(g);
+		else if(CURRENT_SCREEN instanceof Menu) {
+			((Menu)CURRENT_SCREEN).paint(g);
 		}
 	}
-	
+
 	public static void keyPressed(int key, char c) {
 		if(key == 42) {
 			shiftHeld = true;
 		}
-		
+
 		if(c == 'g' || c == 'G'){
 			if(CURRENT_SCREEN == IN_GAME) {
 				GameEditor.init();
@@ -47,11 +48,15 @@ public class Screen {
 			((StartMenuScreen) HOME_MENU).inputHandler(key, c);
 		}
 		
+		if(CURRENT_SCREEN == IN_GAME) {
+			Game.keyPressed(key, c);
+		}
+
 		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.keyPressed(key, c);
 		}
 	}
-	
+
 	public static void mouseMoved(int ox, int oy, int nx, int ny) {
 		float tempX = (float) Core.input.getMouseX() / scaleX;
 		float tempY = (float) Core.input.getMouseY() / scaleY;
@@ -60,18 +65,22 @@ public class Screen {
 			Globals.mouseY = (int) tempY - Game.p.velocityY + Camera.y;
 		}
 		if(CURRENT_SCREEN == IN_EDITOR) {
-			Globals.mouseX = (int) tempX + Camera.x - Game.p.velocityX;
-			Globals.mouseY = (int) tempY - Game.p.velocityY + Camera.y;
+			Globals.mouseX = (int) tempX + Camera.x;
+			Globals.mouseY = (int) tempY + Camera.y;
 			GameEditor.mouseMoved(ox, oy, nx,ny);
 		}
+		if(CURRENT_SCREEN instanceof Menu) {
+			Globals.mouseX = (int) tempX;
+			Globals.mouseY = (int) tempY;
+		}
 	}
-	
+
 	public static void mouseDragged(int ox, int oy, int nx, int ny) {
 		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mouseDragged(ox, oy, nx,ny);
 		}
 	}
-	
+
 	public static void mouseWheelMoved(int change) {
 		if(CURRENT_SCREEN == IN_GAME) {
 			Game.mouseWheelMoved(change);
@@ -103,21 +112,26 @@ public class Screen {
 		if(button == 1) {
 			rightMousePressed = true;
 		}
-		
+
 		if(CURRENT_SCREEN == IN_EDITOR) {
 			GameEditor.mousePressed(button, x, y);
 		}
+
+		if(CURRENT_SCREEN instanceof Menu) {
+			Menu temp = (Menu) CURRENT_SCREEN;
+			temp.menuItems.get(temp.menuItemSelected).performAction();
+		}
 	}
-	
+
 	public static void mouseReleased(int button, int x, int y) {
 		mousePressed = false;
 		if(button == 1) {
 			rightMousePressed = true;
 		}
 	}
-	
+
 	public static boolean shiftHeld = false;
 	public static boolean mousePressed = false;
 	public static boolean rightMousePressed = false;
-	
+
 }

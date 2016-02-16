@@ -119,7 +119,10 @@ public class Game {
 		}
 	}
 	
-	public void keyPressed(int key, char c){
+	public static void keyPressed(int key, char c){
+		if(key == 1) {
+			setGameState(PAUSED);
+		}
 		if(Character.isDigit(c)) {
 			if(Integer.parseInt(c+"") <= Game.currentLevel.inventory.size()) {
 				Game.itemSelected = Integer.parseInt(c+"")-1;

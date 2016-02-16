@@ -9,6 +9,7 @@ import net.zrev.Lookout.Game.Game;
 import net.zrev.Lookout.GameObjects.Entity;
 import net.zrev.Lookout.Screens.GameEditorScreen;
 import net.zrev.Lookout.Screens.GameScreen;
+import net.zrev.Lookout.Screens.PausedScreen;
 import net.zrev.Lookout.Screens.StartMenuScreen;
 
 import org.lwjgl.Sys;
@@ -53,6 +54,8 @@ public class Globals {
 
 	public static final Screen IN_GAME = new GameScreen();
 	public static final  Screen IN_EDITOR = new GameEditorScreen();
+	public static final Screen PAUSED = new PausedScreen();
+	
 	public static Screen PREVIOUS_SCREEN = new StartMenuScreen();
 	
 	public static final int IN_END_LEVEL = 3;

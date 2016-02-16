@@ -33,15 +33,19 @@ public class Resources {
 		try {
 			bg = new Image("bg3.png");
 			bg55 = new Image("bg55.png");
+			menuBg = new Image("menuBg.png");
 			itemSelection = new Image("itemselection.png");
 			itemSelectionSelected = new Image("itemselectionselected.png");
-			InputStream inputStream = Globals.class.getResourceAsStream("/Roman SD.ttf");
+			InputStream inputStream = Globals.class.getResourceAsStream("/AldotheApache.ttf");
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(36f); // set font size
 			gameFont = new TrueTypeFont(awtFont2, false);
 			
-			awtFont2 = awtFont2.deriveFont(20f); // set font size
+			awtFont2 = awtFont2.deriveFont(32f); // set font size
 			editorFont = new TrueTypeFont(awtFont2, false);
+			
+			awtFont2 = awtFont2.deriveFont(72f); // set font size
+			menufont = new TrueTypeFont(awtFont2, false);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -53,7 +57,7 @@ public class Resources {
 		initated = true;
 	}
 	
-	public static TrueTypeFont gameFont, editorFont;
-	public static Image bg, bg55, itemSelection, itemSelectionSelected;
+	public static TrueTypeFont gameFont, editorFont, menufont;
+	public static Image bg, bg55, itemSelection, itemSelectionSelected, menuBg;
 	public static boolean initated = false;
 }
