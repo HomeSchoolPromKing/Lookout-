@@ -1,7 +1,6 @@
 package net.zrev.Lookout.GameEditor;
 
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -126,6 +125,7 @@ public class GameEditor {
 	}
 
 	public static void mouseWheelMoved(int change) {
+		change = change / Math.abs(change);
 		if(change < 0) {
 			if (itemSelected + change >= 0) {
 				itemSelected--;

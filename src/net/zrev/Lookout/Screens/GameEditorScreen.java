@@ -1,7 +1,6 @@
 package net.zrev.Lookout.Screens;
 
 import net.zrev.Lookout.Core.Globals;
-import static net.zrev.Lookout.Game.Controls.*;
 import net.zrev.Lookout.Core.Resources;
 import net.zrev.Lookout.Core.Screen;
 import net.zrev.Lookout.Decorative.BackgroundLayer;
