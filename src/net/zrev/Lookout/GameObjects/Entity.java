@@ -90,6 +90,8 @@ public abstract class Entity implements Cloneable {
 					if(e.isSolid) {
 						onGround = true;
 						if(falling) falling = false;
+						if(willJump) jump();
+						willJump = false;
 					}
 				}
 				else {
@@ -286,6 +288,9 @@ public abstract class Entity implements Cloneable {
 			gravity = 12.0F;
 			jumping = true;
 		}
+		else if (!jumping) {
+			willJump = true;
+		}
 	}
 
 	public void setBoundingBox(Rectangle boundingBox){
@@ -329,7 +334,7 @@ public abstract class Entity implements Cloneable {
 
 	public float gravity = 0.0f; 
 
-	public boolean falling = false, jumping = false, onGround = false, resetGround = false;;
+	public boolean falling = false, jumping = false, onGround = false, resetGround = false, willJump = false;;
 
 	public boolean isSolid = false;
 
