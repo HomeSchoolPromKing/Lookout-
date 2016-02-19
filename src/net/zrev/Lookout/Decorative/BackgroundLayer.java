@@ -23,6 +23,7 @@ public class BackgroundLayer {
 		g.fillRect(Camera.x, Camera.y, Camera.width, Camera.height);
 
 		if(Resources.initated) {
+			g.drawImage(Resources.bg, Camera.x, Camera.y);
 			g.drawImage(Resources.bg55, Camera.x, Camera.y);
 		}
 		

@@ -31,7 +31,7 @@ public class Resources {
 			System.out.println("Loading resources.");
 		}
 		try {
-			bg = new Image("bg3.png");
+			bg = new Image("bg.png");
 			bg55 = new Image("bg55.png");
 			menuBg = new Image("menuBg.png");
 			itemSelection = new Image("itemselection.png");

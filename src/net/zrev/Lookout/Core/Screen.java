@@ -119,7 +119,8 @@ public class Screen {
 
 		if(CURRENT_SCREEN instanceof Menu) {
 			Menu temp = (Menu) CURRENT_SCREEN;
-			temp.menuItems.get(temp.menuItemSelected).performAction();
+			//if(temp.menuItemSelected > 0)
+				temp.menuItems.get(temp.menuItemSelected).performAction();
 		}
 	}
 
